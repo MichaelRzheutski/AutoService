@@ -2,6 +2,7 @@ package com.solvd.autoservice.helpers.menus;
 
 import com.solvd.autoservice.car.Car;
 import com.solvd.autoservice.car.SparePart;
+import com.solvd.autoservice.customlinkedlist.CustomLinkedList;
 import com.solvd.autoservice.exceptions.NegativeValueException;
 import com.solvd.autoservice.exceptions.NotNumberException;
 import com.solvd.autoservice.exceptions.OutOfMenuBoundsException;
@@ -35,12 +36,17 @@ public final class AppMainMenu {
     }
 
     Car car = new Car();
+    SparePart sparePart = new SparePart();
 
     public void mainMenu() throws NotNumberException {
         try (Scanner scanner = new Scanner(System.in)) {
             // Main menu
             boolean isExit = false;
             int option;
+
+            // TOTAL_SPARE_PART_COST
+            CustomLinkedList<SparePart> TOTAL_SPARE_PART_COST = calcSparePartCost(
+                    OBJECTS_CREATOR.createCarList(), OBJECTS_CREATOR.createSpareParts());
 
             while (!isExit) {
                 LOGGER.info(
@@ -73,10 +79,8 @@ public final class AppMainMenu {
                     case 0 -> isExit = true;
                     case 1 -> AUTO_SERV_MENU.autoServMenu(scanner, isExit);
                     case 2 -> showCustomers(OBJECTS_CREATOR.createCustomersTreeSet());
-                    case 3 -> car.showCars(OBJECTS_CREATOR.createCarList(),
-                            SparePart.calcSparePartCost(OBJECTS_CREATOR.createCarList(), OBJECTS_CREATOR.createSpareParts()));
-                    case 4 -> SparePart.showSpareParts(OBJECTS_CREATOR.createCarList(),
-                            calcSparePartCost(OBJECTS_CREATOR.createCarList(), OBJECTS_CREATOR.createSpareParts()));
+                    case 3 -> car.showFullCarInfo(OBJECTS_CREATOR.createCarList());
+                    case 4 -> sparePart.showSpareParts(OBJECTS_CREATOR.createCarList(), TOTAL_SPARE_PART_COST);
                     case 5 -> showMechanics(OBJECTS_CREATOR.createMechanicMap());
                     case 6 -> throw new OutOfMenuBoundsException(
                             "Введён пункт меню " + option + " свыше доступных", option - 1);

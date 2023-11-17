@@ -1,5 +1,6 @@
 package com.solvd.autoservice.car;
 
+import com.solvd.autoservice.customlinkedlist.CustomLinkedList;
 import com.solvd.autoservice.helpers.ObjectsCreator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -7,8 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Objects;
 
-import static com.solvd.autoservice.helpers.ConsoleColors.ANSI_RESET;
-import static com.solvd.autoservice.helpers.ConsoleColors.ANSI_YELLOW;
+import static com.solvd.autoservice.helpers.ConsoleColors.*;
 
 // SparePart: Represents type, make, cost, delivery days
 // and availability spares in stock
@@ -28,6 +28,10 @@ public class SparePart extends Car {
 
     private static final ObjectsCreator OBJECTS_CREATOR = new ObjectsCreator();
 
+    public SparePart() {
+
+    }
+
     public SparePart(
             String sparePartType, String sparePartMake,
             String isInStock, double sparePartCost
@@ -41,33 +45,16 @@ public class SparePart extends Car {
         }
     }
 
-    public static List<Car> showSpareParts(List<Car> cars, List<SparePart> spareParts) {
-        for (Car car : cars) {
-            LOGGER.info(car + "\n");
-        }
-
-        return cars;
-    }
-
     // Method generates random delivery days
     public static int generateDeliveryDays() {
         return (int) (Math.random() * 7) + 1;
     }
 
     // Method calculates spare part costs depends on car manufacture year
-    public static List<SparePart> calcSparePartCost(List<Car> cars, List<SparePart> spareParts) {
+    public static CustomLinkedList<SparePart> calcSparePartCost(
+            List<Car> cars, CustomLinkedList<SparePart> spareParts) {
         double result;
         int sparePartsDeliveryDays;
-
-        // Reset spare part costs to initial values
-        final double oilInitialCost = spareParts.get(0).getSparePartCost();
-        spareParts.get(0).setSparePartCost(50.00);
-
-        final double tyreSetInitialCost = spareParts.get(1).getSparePartCost();
-        spareParts.get(1).setSparePartCost(200.00);
-
-        final double brakeSetInitialCost = spareParts.get(2).getSparePartCost();
-        spareParts.get(2).setSparePartCost(100.00);
 
         // Calculate spare part costs
         for (Car car : cars) {
@@ -89,6 +76,43 @@ public class SparePart extends Car {
         }
 
         return spareParts;
+    }
+
+    public List<Car> showSpareParts(List<Car> cars, CustomLinkedList<SparePart> spareParts) {
+
+        for (Car car : cars) {
+            LOGGER.info(
+                    ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW + car.getCarMake() + "," + ANSI_RESET +
+                            ANSI_GREEN + "Год выпуска: " + ANSI_YELLOW + car.getCarManufactureYear() + "," + ANSI_RESET +
+                            ANSI_GREEN + "Пробег км: " + ANSI_YELLOW + car.getMileage() + ANSI_RESET
+            );
+
+            LOGGER.info(
+                    ANSI_GREEN + "Информация о запчастях: " + ANSI_RESET
+            );
+            for (SparePart sparePart : spareParts) {
+                if (sparePart.getDeliveryDays() != 0) {
+                    System.out.print(
+                            ANSI_RESET + "Тип запчасти: " + ANSI_YELLOW + sparePart.sparePartType + "," + ANSI_RESET +
+                                    ANSI_RESET + " Марка запчасти: " + ANSI_YELLOW + sparePart.sparePartMake + "," + ANSI_RESET +
+                                    ANSI_RESET + " Наличие в магазине: " + ANSI_YELLOW + sparePart.isInStock + ANSI_RESET +
+                                    ANSI_RESET + " Стоимость: " + ANSI_YELLOW + sparePart.sparePartCost + ANSI_RESET +
+                                    ANSI_RESET + " Срок поставки в днях: " + ANSI_YELLOW + sparePart.deliveryDays + "\n" + ANSI_RESET
+                    );
+                } else {
+                    System.out.print(
+                            ANSI_RESET + "Тип запчасти: " + ANSI_YELLOW + sparePart.sparePartType + "," + ANSI_RESET +
+                                    ANSI_RESET + " Марка запчасти: " + ANSI_YELLOW + sparePart.sparePartMake + "," + ANSI_RESET +
+                                    ANSI_RESET + " Наличие в магазине: " + ANSI_YELLOW + sparePart.isInStock + ANSI_RESET +
+                                    ANSI_RESET + " Стоимость: " + ANSI_YELLOW + sparePart.sparePartCost + "\n" + ANSI_RESET
+                    );
+                }
+
+            }
+            System.out.println();
+        }
+
+        return cars;
     }
 
     public String getSparePartType() {
@@ -155,7 +179,7 @@ public class SparePart extends Car {
         return ANSI_RESET + "\nТип запчасти: " + ANSI_YELLOW + sparePartType + "," + ANSI_RESET +
                 ANSI_RESET + " Марка запчасти: " + ANSI_YELLOW + sparePartMake + "," + ANSI_RESET +
                 ANSI_RESET + " Наличие в магазине: " + ANSI_YELLOW + isInStock + ANSI_RESET +
-                ANSI_RESET + " Стоимость: " + ANSI_YELLOW + sparePartCost + ANSI_RESET +
-                ANSI_RESET + " Срок поставки: " + ANSI_YELLOW + deliveryDays + ANSI_RESET;
+                ANSI_RESET + " Стоимость: " + ANSI_YELLOW + sparePartCost + ANSI_RESET;
+//                ANSI_RESET + " Срок поставки: " + ANSI_YELLOW + deliveryDays + ANSI_RESET;
     }
 }

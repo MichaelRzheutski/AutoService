@@ -149,7 +149,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
         return result;
     }
 
-    public final List<Car> showCars(List<Car> cars, List<SparePart> spareParts) {
+    public final List<Car> showShortCarInfo(List<Car> cars) {
         for (Car car : cars) {
             LOGGER.info(
                     ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW
@@ -164,37 +164,57 @@ public class Car implements Washable, Paintable, BodyRepairable,
                             + car.getMileage() + ANSI_RESET
             );
 
-            if (car.getCarMake().equals("BMW X6")) {
-                isCarWashed(true);
-                isCarPainted(false);
-                isCarBodyRepaired(true);
-                isCarElectronicsRepaired(false);
-                isCarModernized(true);
-            }
-
-            if (car.getCarMake().equals("Toyota Land Cruiser")) {
-                isCarWashed(false);
-                isCarPainted(true);
-                isCarBodyRepaired(false);
-                isCarElectronicsRepaired(true);
-                isCarModernized(false);
-            }
-
-            if (car.getCarMake().equals("Mercedes Benz")) {
-                isCarWashed(true);
-                isCarPainted(true);
-                isCarBodyRepaired(false);
-                isCarElectronicsRepaired(false);
-                isCarModernized(true);
-            }
-
-            LOGGER.info(
-                    ANSI_GREEN + "Информация о запчастях: " + ANSI_RESET
-                            + Arrays.toString(car.getSpareParts()) + "\n" + ANSI_RESET
-            );
         }
 
         return cars;
+    }
+
+    public final List<Car> showFullCarInfo(List<Car> cars) {
+        for (Car car : cars) {
+            LOGGER.info(
+                    ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW
+                            + car.getCarMake() + ANSI_RESET
+            );
+            LOGGER.info(
+                    ANSI_GREEN + "Год выпуска: " + ANSI_YELLOW
+                            + car.getCarManufactureYear() + ANSI_RESET
+            );
+            LOGGER.info(
+                    ANSI_GREEN + "Пробег км: " + ANSI_YELLOW
+                            + car.getMileage() + ANSI_RESET
+            );
+
+            showInterfaces(car);
+        }
+
+        return cars;
+    }
+
+    public final void showInterfaces(Car car) {
+        if (car.getCarMake().equals("BMW X6")) {
+            isCarWashed(true);
+            isCarPainted(false);
+            isCarBodyRepaired(true);
+            isCarElectronicsRepaired(false);
+            isCarModernized(true);
+        }
+
+        if (car.getCarMake().equals("Toyota Land Cruiser")) {
+            isCarWashed(false);
+            isCarPainted(true);
+            isCarBodyRepaired(false);
+            isCarElectronicsRepaired(true);
+            isCarModernized(false);
+        }
+
+        if (car.getCarMake().equals("Mercedes Benz")) {
+            isCarWashed(true);
+            isCarPainted(true);
+            isCarBodyRepaired(false);
+            isCarElectronicsRepaired(false);
+            isCarModernized(true);
+        }
+
     }
 
     public String getCarMake() {
