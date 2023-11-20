@@ -184,7 +184,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
                             + car.getMileage() + ANSI_RESET
             );
 
-            showInterfaces(car);
+//            showInterfaces(car);
         }
 
         return cars;

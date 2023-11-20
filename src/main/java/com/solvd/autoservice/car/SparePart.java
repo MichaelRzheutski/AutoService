@@ -1,7 +1,5 @@
 package com.solvd.autoservice.car;
 
-import com.solvd.autoservice.customlinkedlist.CustomLinkedList;
-import com.solvd.autoservice.helpers.ObjectsCreator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,8 +24,6 @@ public class SparePart extends Car {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private static final ObjectsCreator OBJECTS_CREATOR = new ObjectsCreator();
-
     public SparePart() {
 
     }
@@ -50,47 +46,32 @@ public class SparePart extends Car {
         return (int) (Math.random() * 7) + 1;
     }
 
+    // TODO: Refactor this method
     // Method calculates spare part costs depends on car manufacture year
-    public static CustomLinkedList<SparePart> calcSparePartCost(
-            List<Car> cars, CustomLinkedList<SparePart> spareParts) {
-        double result;
-        int sparePartsDeliveryDays;
-
-        // Calculate spare part costs
+    public static List<Car> calcSparePartCost(List<Car> cars) {
         for (Car car : cars) {
+            for (Car sparePart : car.getSpareParts()) {
 
-            for (SparePart sparePart : spareParts) {
-
-                if (car.getCarManufactureYear() > 2015) {
-                    result = sparePart.getSparePartCost();
-                    sparePart.setSparePartCost(result *= 1.5);
-
-                    if (sparePart.getDeliveryDays() > 0) {
-                        sparePartsDeliveryDays = sparePart.getDeliveryDays() * 2;
-                        sparePart.setSparePartCost(result += sparePartsDeliveryDays);
-                    }
-
-                }
             }
-            break;
+
         }
 
-        return spareParts;
+        return cars;
     }
 
-    public List<Car> showSpareParts(List<Car> cars, CustomLinkedList<SparePart> spareParts) {
-
+    public List<Car> showSpareParts(List<Car> cars) {
         for (Car car : cars) {
             LOGGER.info(
-                    ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW + car.getCarMake() + "," + ANSI_RESET +
-                            ANSI_GREEN + "Год выпуска: " + ANSI_YELLOW + car.getCarManufactureYear() + "," + ANSI_RESET +
+                    ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW + car.getCarMake() + ", " + ANSI_RESET +
+                            ANSI_GREEN + "Год выпуска: " + ANSI_YELLOW + car.getCarManufactureYear() + ", " + ANSI_RESET +
                             ANSI_GREEN + "Пробег км: " + ANSI_YELLOW + car.getMileage() + ANSI_RESET
             );
 
             LOGGER.info(
                     ANSI_GREEN + "Информация о запчастях: " + ANSI_RESET
             );
-            for (SparePart sparePart : spareParts) {
+
+            for (SparePart sparePart : car.getSpareParts()) {
                 if (sparePart.getDeliveryDays() != 0) {
                     System.out.print(
                             ANSI_RESET + "Тип запчасти: " + ANSI_YELLOW + sparePart.sparePartType + "," + ANSI_RESET +
@@ -107,8 +88,8 @@ public class SparePart extends Car {
                                     ANSI_RESET + " Стоимость: " + ANSI_YELLOW + sparePart.sparePartCost + "\n" + ANSI_RESET
                     );
                 }
-
             }
+
             System.out.println();
         }
 

@@ -35,15 +35,6 @@ public final class RepCostCalc {
         scanner.nextLine();
 
         // Reset spare invoice costs to initial values
-        final double alexeyPrivolnovInitialInvoice = invoiceList.get(0).getTotalCost();
-        invoiceList.get(0).setTotalCost(alexeyPrivolnovInitialInvoice);
-
-        final double sergeyVlasovInitialInvoice = invoiceList.get(1).getTotalCost();
-        invoiceList.get(1).setTotalCost(sergeyVlasovInitialInvoice);
-
-        final double vladimirDolginInitialInvoice = invoiceList.get(2).getTotalCost();
-        invoiceList.get(2).setTotalCost(vladimirDolginInitialInvoice);
-
         double alexeyPrivolnovInvoice;
         double sergeyVlasovInvoice;
         double vladimirDolginInvoice;

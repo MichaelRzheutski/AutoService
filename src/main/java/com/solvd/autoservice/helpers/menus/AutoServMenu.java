@@ -1,5 +1,6 @@
 package com.solvd.autoservice.helpers.menus;
 
+import com.solvd.autoservice.carservice.Invoice;
 import com.solvd.autoservice.exceptions.NegativeValueException;
 import com.solvd.autoservice.exceptions.NotNumberException;
 import com.solvd.autoservice.exceptions.OutOfMenuBoundsException;
@@ -7,6 +8,7 @@ import com.solvd.autoservice.helpers.ObjectsCreator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static com.solvd.autoservice.helpers.ConsoleColors.*;
@@ -14,8 +16,9 @@ import static com.solvd.autoservice.helpers.calcs.RepCostCalc.calcRepCost;
 import static com.solvd.autoservice.helpers.calcs.RepTimeCalc.calculateRepTime;
 
 public final class AutoServMenu {
-    CarDiagMenu carDiagMenu = new CarDiagMenu();
     private static final ObjectsCreator OBJECTS_CREATOR = new ObjectsCreator();
+    private static final List<Invoice> INVOICES = OBJECTS_CREATOR.createInvoiceList();
+    CarDiagMenu carDiagMenu = new CarDiagMenu();
 
     // Setup Logger log4j2
     static {
@@ -58,7 +61,7 @@ public final class AutoServMenu {
                     case 0 -> isExit = true;
                     case 1 -> carDiagMenu.diagServiceMenu(scanner, isExit);
                     case 2 -> calculateRepTime(scanner, isExit);
-                    case 3 -> calcRepCost(scanner, isExit, OBJECTS_CREATOR.createInvoiceList());
+                    case 3 -> calcRepCost(scanner, isExit, INVOICES);
                     case 4 -> throw new OutOfMenuBoundsException(
                             "Введён пункт меню " + option + " свыше доступных", option - 1);
                     case -1 -> throw new NegativeValueException("Введено негативное число", option);

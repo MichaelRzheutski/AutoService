@@ -11,19 +11,6 @@ public class CustomLinkedList<E> extends AbstractSequentialList<E> implements Li
     public CustomLinkedList() {
     }
 
-    // Links first element
-    private void linkFirst(E element) {
-        final Node<E> first = this.first;
-        final Node<E> newNode = new Node<>(null, element, first);
-        this.first = newNode;
-        if (first == null)
-            last = newNode;
-        else
-            first.prev = newNode;
-        size++;
-        modCount++;
-    }
-
     // Links last element
     void linkLast(E element) {
         final Node<E> l = last;
@@ -50,38 +37,6 @@ public class CustomLinkedList<E> extends AbstractSequentialList<E> implements Li
         modCount++;
     }
 
-    // Unlinks non-null first node
-    private E unlinkFirst(Node<E> first) {
-        final E element = first.item;
-        final Node<E> next = first.next;
-        first.item = null;
-        first.next = null;
-        this.first = next;
-        if (next == null)
-            last = null;
-        else
-            next.prev = null;
-        size--;
-        modCount++;
-        return element;
-    }
-
-    // Unlinks non-null last node
-    private E unlinkLast(Node<E> last) {
-        final E element = last.item;
-        final Node<E> prev = last.prev;
-        last.item = null;
-        last.prev = null; // help GC
-        this.last = prev;
-        if (prev == null)
-            first = null;
-        else
-            prev.next = null;
-        size--;
-        modCount++;
-        return element;
-    }
-
     // Unlinks non-null node
     E unlink(Node<E> x) {
         final E element = x.item;
@@ -106,54 +61,6 @@ public class CustomLinkedList<E> extends AbstractSequentialList<E> implements Li
         size--;
         modCount++;
         return element;
-    }
-
-
-    // Returns the first element in this list
-    public E getFirst() {
-        final Node<E> first = this.first;
-        if (first == null)
-            throw new NoSuchElementException();
-        return first.item;
-    }
-
-    // Returns the last element in this list
-    public E getLast() {
-        final Node<E> last = this.last;
-        if (last == null)
-            throw new NoSuchElementException();
-        return last.item;
-    }
-
-    // Removes and returns the first element from this list
-    public E removeFirst() {
-        final Node<E> first = this.first;
-        if (first == null)
-            throw new NoSuchElementException();
-        return unlinkFirst(first);
-    }
-
-    // Removes and returns the last element from this list
-    public E removeLast() {
-        final Node<E> last = this.last;
-        if (last == null)
-            throw new NoSuchElementException();
-        return unlinkLast(last);
-    }
-
-    // Inserts the specified element at the beginning of this list
-    public void addFirst(E element) {
-        linkFirst(element);
-    }
-
-    // Appends the specified element to the end of this list
-    public void addLast(E element) {
-        linkLast(element);
-    }
-
-    // Returns true if this list contains the specified element
-    public boolean contains(Object object) {
-        return indexOf(object) >= 0;
     }
 
     // Returns the number of elements in this list
@@ -187,54 +94,6 @@ public class CustomLinkedList<E> extends AbstractSequentialList<E> implements Li
             }
         }
         return false;
-    }
-
-    // Appends all of the elements in the specified collection to the end of
-    // this list, in the order that they are returned by the specified
-    // collection's iterator
-    public boolean addAll(Collection<? extends E> collection) {
-        return addAll(size, collection);
-    }
-
-    // Inserts all of the elements in the specified collection into this
-    // list, starting at the specified position
-    public boolean addAll(int index, Collection<? extends E> collection) {
-        checkPositionIndex(index);
-
-        Object[] a = collection.toArray();
-        int numNew = a.length;
-        if (numNew == 0)
-            return false;
-
-        Node<E> predecessor, successor;
-        if (index == size) {
-            successor = null;
-            predecessor = last;
-        } else {
-            successor = node(index);
-            predecessor = successor.prev;
-        }
-
-        for (Object object : a) {
-            @SuppressWarnings("unchecked") E element = (E) object;
-            Node<E> newNode = new Node<>(predecessor, element, null);
-            if (predecessor == null)
-                first = newNode;
-            else
-                predecessor.next = newNode;
-            predecessor = newNode;
-        }
-
-        if (successor == null) {
-            last = predecessor;
-        } else {
-            predecessor.next = successor;
-            successor.prev = predecessor;
-        }
-
-        size += numNew;
-        modCount++;
-        return true;
     }
 
     // Removes all of the elements from this list
@@ -477,6 +336,11 @@ public class CustomLinkedList<E> extends AbstractSequentialList<E> implements Li
         for (Node<E> x = first; x != null; x = x.next)
             result[i++] = x.item;
         return result;
+    }
+
+    // Method checks if the LinkedList empty
+    public boolean isEmpty() {
+        return size() == 0;
     }
 
 }
