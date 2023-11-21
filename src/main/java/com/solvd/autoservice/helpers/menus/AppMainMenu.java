@@ -22,7 +22,7 @@ public final class AppMainMenu {
     private static final Car CAR = new Car();
     private static final SparePart SPARE_PART = new SparePart();
     public static final List<Car> CAR_LIST = OBJECTS_CREATOR.createCarList();
-    private static final AutoServMenu AUTO_SERV_MENU = new AutoServMenu();
+    private static final AutoServiceMenu AUTO_SERVICE_MENU = new AutoServiceMenu();
 
     // Setup Logger log4j2
     static {
@@ -76,7 +76,7 @@ public final class AppMainMenu {
 
                 switch (option) {
                     case 0 -> isExit = true;
-                    case 1 -> AUTO_SERV_MENU.autoServMenu(scanner, isExit);
+                    case 1 -> AUTO_SERVICE_MENU.showAutoServiceMenu(scanner, isExit);
                     case 2 -> showCustomers(OBJECTS_CREATOR.createCustomersTreeSet());
                     case 3 -> CAR.showFullCarInfo(OBJECTS_CREATOR.carList);
                     case 4 -> SPARE_PART.showSpareParts(TOTAL_SPARE_PART_COST);

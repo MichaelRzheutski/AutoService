@@ -143,7 +143,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
         result = getCarModernized();
         LOGGER.info(
                 ANSI_GREEN + "Модернизация: " + ANSI_RESET
-                        + getCarModernized() + ANSI_RESET
+                        + getCarModernized() + "\n" + ANSI_RESET
         );
 
         return result;
@@ -184,7 +184,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
                             + car.getMileage() + ANSI_RESET
             );
 
-//            showInterfaces(car);
+            showInterfaces(car);
         }
 
         return cars;

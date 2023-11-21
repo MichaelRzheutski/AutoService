@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 import static com.solvd.autoservice.helpers.ConsoleColors.*;
 
-public final class RepTimeCalc {
+public final class RepairmentTimeCalc {
     private static final ObjectsCreator OBJECTS_CREATOR = new ObjectsCreator();
 
     // Setup Logger log4j2
@@ -22,7 +22,7 @@ public final class RepTimeCalc {
     private static final Logger LOGGER = LogManager.getLogger();
 
     // Calculate car repairment time
-    public static int calculateRepTime(Scanner scanner, boolean isExit) {
+    public static int calcRepairmentTime(Scanner scanner, boolean isExit) {
         LOGGER.info(ANSI_GREEN + "Выберите автомобиль" + ANSI_RESET);
         LOGGER.info("[1]. BMW X6");
         LOGGER.info("[2]. Toyota Land Cruiser");
@@ -41,7 +41,7 @@ public final class RepTimeCalc {
             switch (option) {
                 case 0 -> isExit = true;
                 case 1 -> {
-                    bmwX6DiagnosticsTime = repTimeCalculator(
+                    bmwX6DiagnosticsTime = repairmentTimeCalculator(
                             OBJECTS_CREATOR.bmwX6Diagnostics.getDiagnosticsTime(),
                             OBJECTS_CREATOR.bmwX6.getSpareParts(),
                             OBJECTS_CREATOR.mechanicMap
@@ -53,7 +53,7 @@ public final class RepTimeCalc {
                     result = bmwX6DiagnosticsTime;
                 }
                 case 2 -> {
-                    toyotaLandCruiserDiagnosticsTime = repTimeCalculator(
+                    toyotaLandCruiserDiagnosticsTime = repairmentTimeCalculator(
                             OBJECTS_CREATOR.toyotaLandCruiserDiagnostics.getDiagnosticsTime(),
                             OBJECTS_CREATOR.toyotaLandCruiser.getSpareParts(),
                             OBJECTS_CREATOR.mechanicMap
@@ -66,7 +66,7 @@ public final class RepTimeCalc {
                     result = toyotaLandCruiserDiagnosticsTime;
                 }
                 case 3 -> {
-                    mercedesBenzDiagnosticsTime = repTimeCalculator(
+                    mercedesBenzDiagnosticsTime = repairmentTimeCalculator(
                             OBJECTS_CREATOR.mercedesBenzDiagnostics.getDiagnosticsTime(),
                             OBJECTS_CREATOR.mercedesBenz.getSpareParts(),
                             OBJECTS_CREATOR.mechanicMap
@@ -90,25 +90,25 @@ public final class RepTimeCalc {
 
     // Method calculates total cost of repairment including diagnostics result,
     // damages severity and term of spare parts delivery
-    public static int repTimeCalculator(
+    public static int repairmentTimeCalculator(
             int diagnosticsTime, SparePart[] spareParts,
             Map<Integer, Mechanic> mechanics
     ) {
-        RepCostCalc.checkDiagnosticsResult(
-                OBJECTS_CREATOR.bmwX6Diagnostics.getDiagnosticsResult(),
-                OBJECTS_CREATOR.alexeyPrivolnovInvoice.getTotalCost(),
-                OBJECTS_CREATOR.alexeyPrivolnov.getName(),
-                OBJECTS_CREATOR.alexeyPrivolnov.getSurname(),
-                OBJECTS_CREATOR.bmwX6Diagnostics.getDiagnosticsTime()
-        );
-
-        RepCostCalc.checkDamagesSeverity(
-                OBJECTS_CREATOR.bmwX6Diagnostics.getDamagesSeverity(),
-                OBJECTS_CREATOR.alexeyPrivolnovInvoice.getTotalCost(),
-                OBJECTS_CREATOR.alexeyPrivolnov.getName(),
-                OBJECTS_CREATOR.alexeyPrivolnov.getSurname(),
-                OBJECTS_CREATOR.bmwX6Diagnostics.getDiagnosticsTime()
-        );
+//        RepairmentCostCalc.checkDiagnosticsResult(
+//                OBJECTS_CREATOR.bmwX6Diagnostics.getDiagnosticsResult(),
+//                OBJECTS_CREATOR.alexeyPrivolnovInvoice.getTotalCost(),
+//                OBJECTS_CREATOR.alexeyPrivolnov.getName(),
+//                OBJECTS_CREATOR.alexeyPrivolnov.getSurname(),
+//                OBJECTS_CREATOR.bmwX6Diagnostics.getDiagnosticsTime()
+//        );
+//
+//        RepairmentCostCalc.checkDamagesSeverity(
+//                OBJECTS_CREATOR.bmwX6Diagnostics.getDamagesSeverity(),
+//                OBJECTS_CREATOR.alexeyPrivolnovInvoice.getTotalCost(),
+//                OBJECTS_CREATOR.alexeyPrivolnov.getName(),
+//                OBJECTS_CREATOR.alexeyPrivolnov.getSurname(),
+//                OBJECTS_CREATOR.bmwX6Diagnostics.getDiagnosticsTime()
+//        );
 
         int totalRepairmentTime = 0;
         int sparePartsDeliveryTime;
