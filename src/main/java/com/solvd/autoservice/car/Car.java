@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import static com.solvd.autoservice.car.SparePart.calculateSparePartsCost;
 import static com.solvd.autoservice.enums.ConsoleColors.*;
@@ -133,23 +134,24 @@ public class Car implements Washable, Paintable, BodyRepairable,
         return result;
     }
 
-    // Method shows full info about car
+    // Method shows full info about car uses lambda invocations
     public final void showFullCarInfo(List<Car> cars) {
         for (Car car : cars) {
-            showShortCarInfo(car);
-            showCarServices(car);
+            showShortCarInfo.accept(car);
+            showCarServices.accept(car);
         }
     }
 
-    // Method shows spare parts in shop
+    // Method shows spare parts in shop uses lambda invocations
     public final void showSpareParts(List<Car> cars) {
         for (Car car : cars) {
-            showShortCarInfo(car);
-            calculateSparePartsCost(car);
+            showShortCarInfo.accept(car);
+            calculateSparePartsCost.apply(car);
         }
     }
 
-    public final void showShortCarInfo(Car car) {
+    // Lambda expression shows short info about car
+    Consumer<Car> showShortCarInfo = (car) -> {
         LOGGER.info(
                 ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW
                         + car.getCarMake() + ANSI_RESET
@@ -162,9 +164,10 @@ public class Car implements Washable, Paintable, BodyRepairable,
                 ANSI_GREEN + "Пробег км: " + ANSI_YELLOW
                         + car.getMileage() + ANSI_RESET
         );
-    }
+    };
 
-    public final void showCarServices(Car car) {
+    // Lambda expression shows car applied cservices for a car
+    Consumer<Car> showCarServices = (car) -> {
         if (car.getCarMake().equals("BMW X6")) {
             isCarWashed(true);
             isCarPainted(false);
@@ -189,7 +192,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
             isCarModernized(true);
         }
         System.out.println();
-    }
+    };
 
     public String getCarMake() {
         return carMake;

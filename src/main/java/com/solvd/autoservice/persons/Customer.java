@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Marker;
 import java.util.Formatter;
 import java.util.Locale;
 import java.util.Set;
+import java.util.function.Consumer;
 
 import static com.solvd.autoservice.enums.ConsoleColors.*;
 
@@ -76,7 +77,8 @@ public final class Customer extends Person implements IChildRoom {
         return result;
     }
 
-    public Marker showChildRoomUsage(Customer customer) {
+    // Lambda expression shows if the child room used
+    public Consumer<Customer> showChildRoomUsage = (customer) -> {
         if (customer.getName().equals("Алексей")
                 && customer.getSurname().equals("Привольнов")) {
             isChildRoomUsed(false);
@@ -93,10 +95,9 @@ public final class Customer extends Person implements IChildRoom {
         }
 
         System.out.println();
-        return null;
-    }
+    };
 
-    // Method shows whole info about customers
+    // Method shows whole info about customers uses lambda invocation
     public void showCustomers(Set<Customer> customers) {
 
         for (Customer customer : customers) {
@@ -170,7 +171,7 @@ public final class Customer extends Person implements IChildRoom {
                             + customer.getMechanic().getExpertise() + ANSI_RESET
             );
 
-            showChildRoomUsage(customer);
+            showChildRoomUsage.accept(customer);
         }
     }
 

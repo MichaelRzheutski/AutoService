@@ -2,6 +2,8 @@ package com.solvd.autoservice.helpers.calcs;
 
 import com.solvd.autoservice.car.SparePart;
 import com.solvd.autoservice.customlinkedlist.CustomLinkedList;
+import com.solvd.autoservice.enums.CarDiagnosticsMenuItems;
+import com.solvd.autoservice.enums.GeneralMenuItems;
 import com.solvd.autoservice.exceptions.NegativeValueException;
 import com.solvd.autoservice.exceptions.NotNumberException;
 import com.solvd.autoservice.exceptions.OutOfMenuBoundsException;
@@ -36,12 +38,12 @@ public final class RepairmentTimeCalc {
 
         try {
             while (!isExit) {
-                LOGGER.info(ANSI_GREEN + "Выберите автомобиль" + ANSI_RESET);
-                LOGGER.info("[1]. BMW X6");
-                LOGGER.info("[2]. Toyota Land Cruiser");
-                LOGGER.info("[3]. Mercedes Benz");
-                LOGGER.info("[4]. Выйти в предыдущее меню");
-                LOGGER.info("[0]. Выйти из программы");
+                LOGGER.info(ANSI_GREEN + "Выберите авто для подсчёта времени ремонта:" + ANSI_RESET);
+                LOGGER.info("[1]. " + CarDiagnosticsMenuItems.AUTOSERVICE_BMWX6_DIAGNOSTICS);
+                LOGGER.info("[2]. " + CarDiagnosticsMenuItems.AUTOSERVICE_TOYOTA_LAND_CRUISER_DIAGNOSTICS);
+                LOGGER.info("[3]. " + CarDiagnosticsMenuItems.AUTOSERVICE_MERCEDES_BENZ_DIAGNOSTICS);
+                LOGGER.info("[4]. " + GeneralMenuItems.AUTOSERVICE_PREVIOUS_MENU);
+                LOGGER.info("[0]. " + GeneralMenuItems.AUTOSERVICE_EXIT);
 
                 if (scanner.hasNextInt()) {
                     option = scanner.nextInt();

@@ -3,6 +3,8 @@ package com.solvd.autoservice.car;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.function.Function;
+
 import static com.solvd.autoservice.enums.ConsoleColors.*;
 
 public class CarDiagnostics extends Car {
@@ -27,7 +29,8 @@ public class CarDiagnostics extends Car {
         this.diagnosticsTime = diagnosticsTime;
     }
 
-    public static CarDiagnostics checkCar(CarDiagnostics carDiagnostics) {
+    // Lambda expression which checks car
+    public static Function<CarDiagnostics, CarDiagnostics> checkCar = (carDiagnostics) -> {
         LOGGER.info(
                 ANSI_GREEN + "Марка авто: " + ANSI_YELLOW +
                         carDiagnostics.getCarForDiagnostics().getCarMake() + ANSI_RESET
@@ -54,7 +57,7 @@ public class CarDiagnostics extends Car {
         );
 
         return carDiagnostics;
-    }
+    };
 
     public Car getCarForDiagnostics() {
         return carForDiagnostics;

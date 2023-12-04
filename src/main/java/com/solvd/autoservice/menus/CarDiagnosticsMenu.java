@@ -31,10 +31,7 @@ public final class CarDiagnosticsMenu {
 
         try {
             while (!isExit) {
-                LOGGER.info(
-                        String.format("%sВыберите авто для диагностики:%s",
-                                ANSI_GREEN, ANSI_RESET)
-                );
+                LOGGER.info(ANSI_GREEN + "Выберите авто для диагностики:" + ANSI_RESET);
                 LOGGER.info("[1]. " + CarDiagnosticsMenuItems.AUTOSERVICE_BMWX6_DIAGNOSTICS);
                 LOGGER.info("[2]. " + CarDiagnosticsMenuItems.AUTOSERVICE_TOYOTA_LAND_CRUISER_DIAGNOSTICS);
                 LOGGER.info("[3]. " + CarDiagnosticsMenuItems.AUTOSERVICE_MERCEDES_BENZ_DIAGNOSTICS);
@@ -46,9 +43,9 @@ public final class CarDiagnosticsMenu {
 
                     switch (option) {
                         case 0 -> System.exit(0);
-                        case 1 -> checkCar(OBJECTS_CREATOR.bmwX6Diagnostics);
-                        case 2 -> checkCar(OBJECTS_CREATOR.toyotaLandCruiserDiagnostics);
-                        case 3 -> checkCar(OBJECTS_CREATOR.mercedesBenzDiagnostics);
+                        case 1 -> checkCar.apply(OBJECTS_CREATOR.bmwX6Diagnostics);
+                        case 2 -> checkCar.apply(OBJECTS_CREATOR.toyotaLandCruiserDiagnostics);
+                        case 3 -> checkCar.apply(OBJECTS_CREATOR.mercedesBenzDiagnostics);
                         case 4 -> isExit = true;
                         case 5 -> throw new OutOfMenuBoundsException(
                                 "Введён пункт меню " + option + " свыше доступных", option - 1);
