@@ -4,18 +4,19 @@ import com.solvd.autoservice.car.SparePart;
 import com.solvd.autoservice.carservice.Appointment;
 import com.solvd.autoservice.carservice.Invoice;
 import com.solvd.autoservice.carservice.ServiceType;
+import com.solvd.autoservice.interfaces.IChildRoom;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Marker;
 
 import java.util.Formatter;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Set;
 
 import static com.solvd.autoservice.helpers.ConsoleColors.*;
 
 // Customer: Represents a whole information about customer
-public final class Customer extends Person {
+public final class Customer extends Person implements IChildRoom {
     private Appointment appointment;
     private String contactInformation;
     private String carName;
@@ -23,6 +24,7 @@ public final class Customer extends Person {
     private Mechanic mechanic;
     private SparePart sparePart;
     private Invoice invoice;
+    private String childRoom;
 
     // Setup Logger log4j2
     static {
@@ -30,6 +32,10 @@ public final class Customer extends Person {
     }
 
     private static final Logger LOGGER = LogManager.getLogger();
+
+    public Customer() {
+        super();
+    }
 
     public Customer(
             Appointment appointment, String name, String surname,
@@ -52,8 +58,46 @@ public final class Customer extends Person {
         return role;
     }
 
+    @Override
+    public String isChildRoomUsed(boolean isChildRoomUsed) {
+        String result;
+
+        if (isChildRoomUsed) {
+            setChildRoomUsed("Воспользовался детской комнатой");
+        } else {
+            setChildRoomUsed("Детской комнатой не пользовался");
+        }
+        result = getChildRoomUsed();
+        LOGGER.info(
+                ANSI_GREEN + "Услуги детской комнаты: " + ANSI_YELLOW
+                        + getChildRoomUsed() + ANSI_RESET
+        );
+
+        return result;
+    }
+
+    public Marker showChildRoomUsage(Customer customer) {
+        if (customer.getName().equals("Алексей")
+                && customer.getSurname().equals("Привольнов")) {
+            isChildRoomUsed(false);
+        }
+
+        if (customer.getName().equals("Сергей")
+                && customer.getSurname().equals("Власов")) {
+            isChildRoomUsed(true);
+        }
+
+        if (customer.getName().equals("Владимир")
+                && customer.getSurname().equals("Долгин")) {
+            isChildRoomUsed(true);
+        }
+
+        System.out.println();
+        return null;
+    }
+
     // Method shows whole info about customers
-    public static void showCustomers(Set<Customer> customers) {
+    public void showCustomers(Set<Customer> customers) {
 
         for (Customer customer : customers) {
             LOGGER.info(
@@ -123,11 +167,10 @@ public final class Customer extends Person {
                             + customer.getMechanic().getName() + " "
                             + customer.getMechanic().getSurname() + ANSI_GREEN
                             + " | Квалификация: " + ANSI_YELLOW
-                            + customer.getMechanic().getExpertise() + ANSI_GREEN
-                            + " | Доступность специалиста: "
-                            + ANSI_YELLOW + customer.getMechanic().getAvailability()
-                            + "\n" + ANSI_RESET
+                            + customer.getMechanic().getExpertise() + ANSI_RESET
             );
+
+            showChildRoomUsage(customer);
         }
     }
 
@@ -187,27 +230,12 @@ public final class Customer extends Person {
         this.mechanic = mechanic;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Customer customer = (Customer) o;
-        return Objects.equals(appointment, customer.appointment)
-                && Objects.equals(contactInformation, customer.contactInformation)
-                && Objects.equals(carName, customer.carName)
-                && Objects.equals(serviceType, customer.serviceType)
-                && Objects.equals(sparePart, customer.sparePart)
-                && Objects.equals(invoice, customer.invoice)
-                && Objects.equals(mechanic, customer.mechanic);
+    public String getChildRoomUsed() {
+        return childRoom;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                super.hashCode(), appointment, contactInformation,
-                carName, serviceType, sparePart, invoice, mechanic
-        );
+    public void setChildRoomUsed(String childRoom) {
+        this.childRoom = childRoom;
     }
 
 }

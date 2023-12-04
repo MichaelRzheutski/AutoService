@@ -1,13 +1,13 @@
 package com.solvd.autoservice.car;
 
+import com.solvd.autoservice.customlinkedlist.CustomLinkedList;
 import com.solvd.autoservice.interfaces.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
+import static com.solvd.autoservice.car.SparePart.calculateSparePartsCost;
 import static com.solvd.autoservice.helpers.ConsoleColors.*;
 
 // Car: Represents make, model, manufacture year, mileage and spare parts
@@ -16,12 +16,12 @@ public class Car implements Washable, Paintable, BodyRepairable,
     protected String carMake;
     protected int carManufactureYear;
     protected int mileage;
-    protected SparePart[] spareParts;
     private String carWash;
     private String carPaint;
     private String bodyRepairment;
     private String electronicsRepairment;
     private String modernization;
+    private CustomLinkedList<SparePart> spareParts;
 
     // Setup Logger log4j2
     static {
@@ -35,28 +35,12 @@ public class Car implements Washable, Paintable, BodyRepairable,
 
     public Car(
             String carMake, int carManufactureYear,
-            int mileage, SparePart[] spareParts
+            int mileage, CustomLinkedList<SparePart> spareParts
     ) {
         this.carMake = carMake;
         this.carManufactureYear = carManufactureYear;
         this.mileage = mileage;
         this.spareParts = spareParts;
-    }
-
-    public Car(
-            String carMake, int carManufactureYear,
-            int mileage
-    ) {
-        this.carMake = carMake;
-        this.carManufactureYear = carManufactureYear;
-        this.mileage = mileage;
-    }
-
-    public Car(
-            String carMake, int carManufactureYear
-    ) {
-        this.carMake = carMake;
-        this.carManufactureYear = carManufactureYear;
     }
 
     @Override
@@ -70,7 +54,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
         }
         result = getCarWashed();
         LOGGER.info(
-                ANSI_GREEN + "Внешний вид машины: " + ANSI_RESET
+                ANSI_GREEN + "Внешний вид машины: " + ANSI_YELLOW
                         + getCarWashed() + ANSI_RESET
         );
 
@@ -88,7 +72,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
         }
         result = getCarPainted();
         LOGGER.info(
-                ANSI_GREEN + "Покраска кузова: " + ANSI_RESET
+                ANSI_GREEN + "Покраска кузова: " + ANSI_YELLOW
                         + getCarPainted() + ANSI_RESET
         );
 
@@ -106,7 +90,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
         }
         result = getCarBodyRepaired();
         LOGGER.info(
-                ANSI_GREEN + "Состояние кузова: " + ANSI_RESET
+                ANSI_GREEN + "Состояние кузова: " + ANSI_YELLOW
                         + getCarBodyRepaired() + ANSI_RESET
         );
 
@@ -124,7 +108,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
         }
         result = getCarElectronicsRepaired();
         LOGGER.info(
-                ANSI_GREEN + "Состояние электроники: " + ANSI_RESET
+                ANSI_GREEN + "Состояние электроники: " + ANSI_YELLOW
                         + getCarElectronicsRepaired() + ANSI_RESET
         );
 
@@ -142,55 +126,45 @@ public class Car implements Washable, Paintable, BodyRepairable,
         }
         result = getCarModernized();
         LOGGER.info(
-                ANSI_GREEN + "Модернизация: " + ANSI_RESET
-                        + getCarModernized() + "\n" + ANSI_RESET
+                ANSI_GREEN + "Модернизация: " + ANSI_YELLOW
+                        + getCarModernized() + ANSI_RESET
         );
 
         return result;
     }
 
-    public final List<Car> showShortCarInfo(List<Car> cars) {
+    // Method shows full info about car
+    public final void showFullCarInfo(List<Car> cars) {
         for (Car car : cars) {
-            LOGGER.info(
-                    ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW
-                            + car.getCarMake() + ANSI_RESET
-            );
-            LOGGER.info(
-                    ANSI_GREEN + "Год выпуска: " + ANSI_YELLOW
-                            + car.getCarManufactureYear() + ANSI_RESET
-            );
-            LOGGER.info(
-                    ANSI_GREEN + "Пробег км: " + ANSI_YELLOW
-                            + car.getMileage() + ANSI_RESET
-            );
-
+            showShortCarInfo(car);
+            showCarServices(car);
         }
-
-        return cars;
     }
 
-    public final List<Car> showFullCarInfo(List<Car> cars) {
+    // Method shows spare parts in shop
+    public final void showSpareParts(List<Car> cars) {
         for (Car car : cars) {
-            LOGGER.info(
-                    ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW
-                            + car.getCarMake() + ANSI_RESET
-            );
-            LOGGER.info(
-                    ANSI_GREEN + "Год выпуска: " + ANSI_YELLOW
-                            + car.getCarManufactureYear() + ANSI_RESET
-            );
-            LOGGER.info(
-                    ANSI_GREEN + "Пробег км: " + ANSI_YELLOW
-                            + car.getMileage() + ANSI_RESET
-            );
-
-            showInterfaces(car);
+            showShortCarInfo(car);
+            calculateSparePartsCost(car);
         }
-
-        return cars;
     }
 
-    public final void showInterfaces(Car car) {
+    public final void showShortCarInfo(Car car) {
+        LOGGER.info(
+                ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW
+                        + car.getCarMake() + ANSI_RESET
+        );
+        LOGGER.info(
+                ANSI_GREEN + "Год выпуска: " + ANSI_YELLOW
+                        + car.getCarManufactureYear() + ANSI_RESET
+        );
+        LOGGER.info(
+                ANSI_GREEN + "Пробег км: " + ANSI_YELLOW
+                        + car.getMileage() + ANSI_RESET
+        );
+    }
+
+    public final void showCarServices(Car car) {
         if (car.getCarMake().equals("BMW X6")) {
             isCarWashed(true);
             isCarPainted(false);
@@ -214,7 +188,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
             isCarElectronicsRepaired(false);
             isCarModernized(true);
         }
-
+        System.out.println();
     }
 
     public String getCarMake() {
@@ -239,14 +213,6 @@ public class Car implements Washable, Paintable, BodyRepairable,
 
     public void setMileage(int mileage) {
         this.mileage = mileage;
-    }
-
-    public SparePart[] getSpareParts() {
-        return spareParts;
-    }
-
-    public void setSpareParts(SparePart[] spareParts) {
-        this.spareParts = spareParts;
     }
 
     public String getCarWashed() {
@@ -289,35 +255,11 @@ public class Car implements Washable, Paintable, BodyRepairable,
         this.modernization = modernization;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Car car = (Car) o;
-        return carManufactureYear == car.carManufactureYear
-                && mileage == car.mileage
-                && Objects.equals(carMake, car.carMake)
-                && Arrays.equals(spareParts, car.spareParts)
-                && Objects.equals(carWash, car.carWash)
-                && Objects.equals(carPaint, car.carPaint)
-                && Objects.equals(bodyRepairment, car.bodyRepairment)
-                && Objects.equals(electronicsRepairment, car.electronicsRepairment)
-                && Objects.equals(modernization, car.modernization);
+    public CustomLinkedList<SparePart> getSpareParts() {
+        return spareParts;
     }
 
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(carMake, carManufactureYear, mileage,
-                carWash, carPaint, bodyRepairment, electronicsRepairment, modernization);
-        result = 31 * result + Arrays.hashCode(spareParts);
-        return result;
-    }
-
-    @Override
-    public String toString() {
-        return ANSI_GREEN + "Марка авто: " + ANSI_YELLOW + carMake + ", " + ANSI_RESET +
-                ANSI_GREEN + "Год выпуска авто: " + ANSI_YELLOW + carManufactureYear + ", " + ANSI_RESET +
-                ANSI_GREEN + "Пробег: " + ANSI_YELLOW + mileage + ", " + ANSI_RESET +
-                ANSI_GREEN + "Запчасти: " + ANSI_YELLOW + Arrays.toString(spareParts) + ", " + ANSI_RESET;
+    public void setSpareParts(CustomLinkedList<SparePart> spareParts) {
+        this.spareParts = spareParts;
     }
 }

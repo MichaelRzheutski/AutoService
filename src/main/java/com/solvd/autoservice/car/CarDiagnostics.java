@@ -3,8 +3,6 @@ package com.solvd.autoservice.car;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Objects;
-
 import static com.solvd.autoservice.helpers.ConsoleColors.*;
 
 public class CarDiagnostics extends Car {
@@ -90,32 +88,4 @@ public class CarDiagnostics extends Car {
         this.diagnosticsTime = diagnosticsTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CarDiagnostics carDiagnostics = (CarDiagnostics) o;
-        return diagnosticsTime == carDiagnostics.diagnosticsTime
-                && Objects.equals(carForDiagnostics, carDiagnostics.carForDiagnostics)
-                && Objects.equals(diagnosticsResult, carDiagnostics.diagnosticsResult)
-                && Objects.equals(damagesSeverity, carDiagnostics.damagesSeverity);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                carForDiagnostics, diagnosticsResult,
-                damagesSeverity, diagnosticsTime
-        );
-    }
-
-    @Override
-    public String toString() {
-        return "CarDiagnostics{" +
-                "carForDiagnostics=" + carForDiagnostics +
-                ", diagnosticsResult='" + diagnosticsResult + '\'' +
-                ", damagesSeverity='" + damagesSeverity + '\'' +
-                ", diagnosticsTime=" + diagnosticsTime +
-                '}';
-    }
 }

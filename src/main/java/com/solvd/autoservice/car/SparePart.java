@@ -1,10 +1,8 @@
 package com.solvd.autoservice.car;
 
+import com.solvd.autoservice.helpers.ObjectsCreator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.List;
-import java.util.Objects;
 
 import static com.solvd.autoservice.helpers.ConsoleColors.*;
 
@@ -25,7 +23,6 @@ public class SparePart extends Car {
     private static final Logger LOGGER = LogManager.getLogger();
 
     public SparePart() {
-
     }
 
     public SparePart(
@@ -46,55 +43,93 @@ public class SparePart extends Car {
         return (int) (Math.random() * 7) + 1;
     }
 
-    // TODO: Refactor this method
-    // Method calculates spare part costs depends on car manufacture year
-    public static List<Car> calcSparePartCost(List<Car> cars) {
-        for (Car car : cars) {
-            for (Car sparePart : car.getSpareParts()) {
+    // Method calculates spare part costs depends on car' manufacture year
+    // and term of sparparts' delivery days
+    public static Car calculateSparePartsCost(Car car) {
+        double engineOilSpareRetailCost = ObjectsCreator.ENGINE_OIL_RETAIL_COST;
+        double tiresSpareRetailCost = ObjectsCreator.TIRE_SET_RETAIL_COST;
+        double brakesSpareRetailCost = ObjectsCreator.BRAKE_SET_RETAIL_COST;
 
+        double newValue;
+        double finalValue;
+
+        for (SparePart sparePart : car.getSpareParts()) {
+
+            if (car.getCarManufactureYear() > 2015
+                    && sparePart.getSparePartType().equals("Моторное масло")) {
+
+                newValue = engineOilSpareRetailCost * 1.5;
+                finalValue = calculateCostByDeliveryDays(sparePart, newValue);
+                printSparePartInfo(sparePart, finalValue);
+
+            } else if (car.getCarManufactureYear() <= 2015
+                    && sparePart.getSparePartType().equals("Моторное масло")) {
+                printSparePartInfo(sparePart, engineOilSpareRetailCost);
+            }
+
+            if (car.getCarManufactureYear() > 2015
+                    && sparePart.getSparePartType().equals("Комплект шин")) {
+
+                newValue = tiresSpareRetailCost * 1.5;
+                finalValue = calculateCostByDeliveryDays(sparePart, newValue);
+                printSparePartInfo(sparePart, finalValue);
+
+            } else if (car.getCarManufactureYear() <= 2015
+                    && sparePart.getSparePartType().equals("Комплект шин")) {
+                printSparePartInfo(sparePart, tiresSpareRetailCost);
+            }
+
+            if (car.getCarManufactureYear() > 2015
+                    && sparePart.getSparePartType().equals("Комплект тормозов")) {
+
+                newValue = brakesSpareRetailCost * 1.5;
+                finalValue = calculateCostByDeliveryDays(sparePart, newValue);
+                printSparePartInfo(sparePart, finalValue);
+
+            } else if (car.getCarManufactureYear() <= 2015
+                    && sparePart.getSparePartType().equals("Комплект тормозов")) {
+                printSparePartInfo(sparePart, brakesSpareRetailCost);
+            }
+        }
+        LOGGER.warn("\n");
+
+        return car;
+    }
+
+    // Method calculates spare part cost depends on delivery days
+    private static double calculateCostByDeliveryDays(SparePart sparePart, double newValue) {
+        int deliveryDays = sparePart.getDeliveryDays();
+
+        if (deliveryDays > 0) {
+            for (int i = 0; i < deliveryDays; ++i) {
+                newValue += 10;
             }
 
         }
 
-        return cars;
+        return newValue;
     }
 
-    public List<Car> showSpareParts(List<Car> cars) {
-        for (Car car : cars) {
+    // Method prints info about spare parts
+    public static void printSparePartInfo(SparePart sparePart, double value) {
+        if (sparePart.getDeliveryDays() != 0) {
             LOGGER.info(
-                    ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW + car.getCarMake() + ", " + ANSI_RESET +
-                            ANSI_GREEN + "Год выпуска: " + ANSI_YELLOW + car.getCarManufactureYear() + ", " + ANSI_RESET +
-                            ANSI_GREEN + "Пробег км: " + ANSI_YELLOW + car.getMileage() + ANSI_RESET
+                    ANSI_GREEN + "Информация о запчастях: \nТип запчасти: " + ANSI_YELLOW + sparePart.getSparePartType() + "," + ANSI_RESET +
+                            ANSI_GREEN + " Марка запчасти: " + ANSI_YELLOW + sparePart.getSparePartMake() + "," + ANSI_RESET +
+                            ANSI_GREEN + " Наличие в магазине: " + ANSI_YELLOW + sparePart.isInStock() + ANSI_RESET +
+                            ANSI_GREEN + " Стоимость: " + ANSI_YELLOW + value + ANSI_RESET +
+                            ANSI_GREEN + " Срок поставки в днях: " + ANSI_YELLOW + sparePart.getDeliveryDays() + ANSI_RESET
             );
-
+        } else {
             LOGGER.info(
-                    ANSI_GREEN + "Информация о запчастях: " + ANSI_RESET
+                    ANSI_GREEN + "Информация о запчастях: \nТип запчасти: " + ANSI_YELLOW + sparePart.getSparePartType() + "," + ANSI_RESET +
+                            ANSI_GREEN + " Марка запчасти: " + ANSI_YELLOW + sparePart.getSparePartMake() + "," + ANSI_RESET +
+                            ANSI_GREEN + " Наличие в магазине: " + ANSI_YELLOW + sparePart.isInStock() + ANSI_RESET +
+                            ANSI_GREEN + " Стоимость: " + ANSI_YELLOW + value + ANSI_RESET
             );
-
-            for (SparePart sparePart : car.getSpareParts()) {
-                if (sparePart.getDeliveryDays() != 0) {
-                    System.out.print(
-                            ANSI_RESET + "Тип запчасти: " + ANSI_YELLOW + sparePart.sparePartType + "," + ANSI_RESET +
-                                    ANSI_RESET + " Марка запчасти: " + ANSI_YELLOW + sparePart.sparePartMake + "," + ANSI_RESET +
-                                    ANSI_RESET + " Наличие в магазине: " + ANSI_YELLOW + sparePart.isInStock + ANSI_RESET +
-                                    ANSI_RESET + " Стоимость: " + ANSI_YELLOW + sparePart.sparePartCost + ANSI_RESET +
-                                    ANSI_RESET + " Срок поставки в днях: " + ANSI_YELLOW + sparePart.deliveryDays + "\n" + ANSI_RESET
-                    );
-                } else {
-                    System.out.print(
-                            ANSI_RESET + "Тип запчасти: " + ANSI_YELLOW + sparePart.sparePartType + "," + ANSI_RESET +
-                                    ANSI_RESET + " Марка запчасти: " + ANSI_YELLOW + sparePart.sparePartMake + "," + ANSI_RESET +
-                                    ANSI_RESET + " Наличие в магазине: " + ANSI_YELLOW + sparePart.isInStock + ANSI_RESET +
-                                    ANSI_RESET + " Стоимость: " + ANSI_YELLOW + sparePart.sparePartCost + "\n" + ANSI_RESET
-                    );
-                }
-            }
-
-            System.out.println();
         }
-
-        return cars;
     }
+
 
     public String getSparePartType() {
         return sparePartType;
@@ -136,31 +171,4 @@ public class SparePart extends Car {
         this.deliveryDays = deliveryDays;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        SparePart sparePart = (SparePart) o;
-        return deliveryDays == sparePart.deliveryDays
-                && Objects.equals(sparePartType, sparePart.sparePartType)
-                && Objects.equals(sparePartMake, sparePart.sparePartMake)
-                && Objects.equals(isInStock, sparePart.isInStock)
-                && Objects.equals(sparePartCost, sparePart.sparePartCost);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), sparePartType, sparePartMake,
-                isInStock, sparePartCost, deliveryDays);
-    }
-
-    @Override
-    public String toString() {
-        return ANSI_RESET + "\nТип запчасти: " + ANSI_YELLOW + sparePartType + "," + ANSI_RESET +
-                ANSI_RESET + " Марка запчасти: " + ANSI_YELLOW + sparePartMake + "," + ANSI_RESET +
-                ANSI_RESET + " Наличие в магазине: " + ANSI_YELLOW + isInStock + ANSI_RESET +
-                ANSI_RESET + " Стоимость: " + ANSI_YELLOW + sparePartCost + ANSI_RESET;
-//                ANSI_RESET + " Срок поставки: " + ANSI_YELLOW + deliveryDays + ANSI_RESET;
-    }
 }

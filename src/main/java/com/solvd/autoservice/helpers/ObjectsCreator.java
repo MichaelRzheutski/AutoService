@@ -26,10 +26,10 @@ public final class ObjectsCreator {
     public static final String TIRE_SET_MAKE = "Белшина";
     public static final String BRAKE_SET_MAKE = "Шустрые тормоза";
 
-    // Spare part costs
-    public static final double ENGINE_OIL_COST = 50.00;
-    public static final double TIRE_SET_COST = 200.00;
-    public static final double BRAKE_SET_COST = 100.00;
+    // Spare part retail cost
+    public static final double ENGINE_OIL_RETAIL_COST = 50.00;
+    public static final double TIRE_SET_RETAIL_COST = 200.00;
+    public static final double BRAKE_SET_RETAIL_COST = 100.00;
 
     // Cars
     public static final String BMW_X6 = "BMW X6";
@@ -62,18 +62,18 @@ public final class ObjectsCreator {
     // Mechanics of autoservice
     public static final String MECHANIC_VLADLEN_PODDUBITSKY_NAME = "Владлен";
     public static final String MECHANIC_VLADLEN_PODDUBITSKY_SURNAME = "Поддубицкий";
-    public static final String MECHANIC_VLADLEN_PODDUBITSKY_EXPERTISE = "мастер";
-    public static final String MECHANIC_VLADLEN_PODDUBITSKY_AVAILABILITY = "занят";
+    public static final String MECHANIC_VLADLEN_PODDUBITSKY_EXPERTISE = "Мастер";
+    public static final String MECHANIC_VLADLEN_PODDUBITSKY_AVAILABILITY = "Занят";
 
     public static final String MECHANIC_VYACHESLAV_MARSHAL_NAME = "Вячеслав";
     public static final String MECHANIC_VYACHESLAV_MARSHAL_SURNAME = "Маршал";
-    public static final String MECHANIC_VYACHESLAV_MARSHAL_EXPERTISE = "специалист";
-    public static final String MECHANIC_VYACHESLAV_MARSHAL_AVAILABILITY = "свободен";
+    public static final String MECHANIC_VYACHESLAV_MARSHAL_EXPERTISE = "Специалист";
+    public static final String MECHANIC_VYACHESLAV_MARSHAL_AVAILABILITY = "Свободен";
 
     public static final String MECHANIC_ENGENY_BELY_NAME = "Евгений";
     public static final String MECHANIC_ENGENY_BELY_SURNAME = "Белый";
-    public static final String MECHANIC_ENGENY_BELY_EXPERTISE = "стажёр";
-    public static final String MECHANIC_ENGENY_BELY_AVAILABILITY = "свободен";
+    public static final String MECHANIC_ENGENY_BELY_EXPERTISE = "Стажёр";
+    public static final String MECHANIC_ENGENY_BELY_AVAILABILITY = "Свободен";
 
     // Apointment for diagnostics' dates
     public static final String ALEXEY_PRIVOLNOV_APPOINTMENT_DATE = "10 Августа 2023";
@@ -124,29 +124,46 @@ public final class ObjectsCreator {
             ENGINE_OIL,
             ENGINE_OIL_MAKE,
             IS_IN_STOCK,
-            ENGINE_OIL_COST
+            ENGINE_OIL_RETAIL_COST
     );
     public SparePart tiresSpare = new SparePart(
             TIRE_SET,
             TIRE_SET_MAKE,
             IS_NOT_IN_STOCK,
-            TIRE_SET_COST
+            TIRE_SET_RETAIL_COST
     );
     public SparePart brakesSpare = new SparePart(
             BRAKE_SET,
             BRAKE_SET_MAKE,
             IS_IN_STOCK,
-            BRAKE_SET_COST
+            BRAKE_SET_RETAIL_COST
     );
-    public CustomLinkedList<SparePart> spareParts = new CustomLinkedList<>();
 
-    // Method creates CustomLinkedList of spare parts
-    public CustomLinkedList<SparePart> createSpareParts() {
-        spareParts.add(oilSpare);
-        spareParts.add(tiresSpare);
-        spareParts.add(brakesSpare);
+    // Create number of spare parts for autos
+    public CustomLinkedList<SparePart> bmwX6SpareParts = new CustomLinkedList<>();
 
-        return spareParts;
+    public CustomLinkedList<SparePart> createBmwX6SpareParts() {
+        bmwX6SpareParts.add(oilSpare);
+        bmwX6SpareParts.add(tiresSpare);
+        bmwX6SpareParts.add(brakesSpare);
+
+        return bmwX6SpareParts;
+    }
+
+    public CustomLinkedList<SparePart> toyotaLandCruiserSpareParts = new CustomLinkedList<>();
+
+    public CustomLinkedList<SparePart> createToyotaLandCruiserSpareParts() {
+        toyotaLandCruiserSpareParts.add(oilSpare);
+        toyotaLandCruiserSpareParts.add(tiresSpare);
+
+        return toyotaLandCruiserSpareParts;
+    }
+
+    public CustomLinkedList<SparePart> mercedesBenzSpareParts = new CustomLinkedList<>();
+
+    public CustomLinkedList<SparePart> createMercedesBenzSpareParts() {
+        mercedesBenzSpareParts.add(oilSpare);
+        return mercedesBenzSpareParts;
     }
 
     // Create mechanics
@@ -168,15 +185,15 @@ public final class ObjectsCreator {
             MECHANIC_ENGENY_BELY_EXPERTISE,
             MECHANIC_ENGENY_BELY_AVAILABILITY
     );
-    public Map<Integer, Mechanic> mechanicMap = new HashMap();
+    public Set<Mechanic> mechanicSet = new HashSet<>();
 
     // Method creates HashMap of mechanics
-    public Map<Integer, Mechanic> createMechanicMap() {
-        mechanicMap.put(0, vladlenPoddubitsky);
-        mechanicMap.put(1, vyacheslavMarshal);
-        mechanicMap.put(2, evgenyBely);
+    public Set<Mechanic> createMechanicSet() {
+        mechanicSet.add(vladlenPoddubitsky);
+        mechanicSet.add(vyacheslavMarshal);
+        mechanicSet.add(evgenyBely);
 
-        return mechanicMap;
+        return mechanicSet;
     }
 
     // Create cars
@@ -184,19 +201,20 @@ public final class ObjectsCreator {
             BMW_X6,
             BMW_X6_MANUFACTURE_YEAR,
             BMW_X6_MILEAGE,
-            new SparePart[]{oilSpare, tiresSpare, brakesSpare}
+            createBmwX6SpareParts()
     );
+
     public Car toyotaLandCruiser = new Car(
             TOYOTA_LAND_CRUISER,
             TOYOTA_LAND_CRUISER_MANUFACTURE_YEAR,
             TOYOTA_LAND_CRUISER_MILEAGE,
-            new SparePart[]{oilSpare, tiresSpare}
+            createToyotaLandCruiserSpareParts()
     );
     public Car mercedesBenz = new Car(
             MERCEDES_BENZ,
             MERCEDES_BENZ_MANUFACTURE_YEAR,
             MERCEDES_BENZ_MILEAGE,
-            new SparePart[]{oilSpare}
+            createMercedesBenzSpareParts()
     );
     public List<Car> carList = new ArrayList<>();
 
@@ -333,11 +351,12 @@ public final class ObjectsCreator {
     public Set<Customer> customersLinkedHashSet = new LinkedHashSet<>();
 
     // Method creates LinkedHashSet of customers
-    public Set<Customer> createCustomersTreeSet() {
+    public Set<Customer> createCustomersSet() {
         customersLinkedHashSet.add(alexeyPrivolnov);
         customersLinkedHashSet.add(sergeyVlasov);
         customersLinkedHashSet.add(vladimirDolgin);
 
         return customersLinkedHashSet;
     }
+
 }

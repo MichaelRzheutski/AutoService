@@ -8,6 +8,9 @@ public abstract class Person {
     protected String surname;
     protected String role;
 
+    public Person() {
+    }
+
     public Person(String name, String surname) {
         this.name = name;
         this.surname = surname;
@@ -43,29 +46,5 @@ public abstract class Person {
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return Objects.equals(name, person.name)
-                && Objects.equals(surname, person.surname)
-                && Objects.equals(role, person.role);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, surname, role);
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", role='" + role + '\'' +
-                '}';
     }
 }

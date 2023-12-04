@@ -3,8 +3,8 @@ package com.solvd.autoservice.persons;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import static com.solvd.autoservice.helpers.ConsoleColors.*;
 
@@ -32,39 +32,22 @@ public final class Mechanic extends Person {
         this.role = "Механик";
     }
 
-    public static void showMechanics(Map<Integer, Mechanic> mechanics) {
-        for (Map.Entry<Integer, Mechanic> mechanic : mechanics.entrySet()) {
+    public static void showMechanics(Set<Mechanic> mechanics) {
+        for (Mechanic mechanic : mechanics) {
             LOGGER.info(
                     ANSI_GREEN + "Имя и фамилия: " + ANSI_YELLOW
-                            + mechanic.getValue().getName() + " " + mechanic.getValue().getSurname() + ANSI_RESET
+                            + mechanic.getName() + " " + mechanic.getSurname() + ANSI_RESET
             );
             LOGGER.info(
                     ANSI_GREEN + "Экспертиза: " + ANSI_YELLOW
-                            + mechanic.getValue().getExpertise() + ANSI_RESET
+                            + mechanic.getExpertise() + ANSI_RESET
             );
             LOGGER.info(
                     ANSI_GREEN + "Доступность: " + ANSI_YELLOW
-                            + mechanic.getValue().getAvailability() + "\n" + ANSI_RESET
+                            + mechanic.getAvailability() + "\n" + ANSI_RESET
             );
         }
     }
-
-//    public static void showMechanics(Map<Integer, Mechanic> mechanics) {
-//        for (Mechanic mechanic : mechanics) {
-//            LOGGER.info(
-//                    ANSI_GREEN + "Имя и фамилия: " + ANSI_YELLOW
-//                            + mechanic.getName() + " " + mechanic.getSurname() + ANSI_RESET
-//            );
-//            LOGGER.info(
-//                    ANSI_GREEN + "Экспертиза: " + ANSI_YELLOW
-//                            + mechanic.getExpertise() + ANSI_RESET
-//            );
-//            LOGGER.info(
-//                    ANSI_GREEN + "Доступность: " + ANSI_YELLOW
-//                            + mechanic.getAvailability() + "\n" + ANSI_RESET
-//            );
-//        }
-//    }
 
     @Override
     public String showPersonRole() {
@@ -85,28 +68,5 @@ public final class Mechanic extends Person {
 
     public void setAvailability(String availability) {
         this.availability = availability;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Mechanic mechanic = (Mechanic) o;
-        return Objects.equals(expertise, mechanic.expertise)
-                && Objects.equals(availability, mechanic.availability
-        );
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(expertise, availability);
-    }
-
-    @Override
-    public String toString() {
-        return "Mechanic{" +
-                "expertise='" + expertise + '\'' +
-                ", availability='" + availability + '\'' +
-                '}';
     }
 }
