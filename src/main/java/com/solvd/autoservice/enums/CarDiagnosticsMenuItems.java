@@ -5,18 +5,18 @@ public enum CarDiagnosticsMenuItems {
     AUTOSERVICE_TOYOTA_LAND_CRUISER_DIAGNOSTICS("Диагностика Toyota LandCruiser"),
     AUTOSERVICE_MERCEDES_BENZ_DIAGNOSTICS("Диагностика Mercedes Benz");
 
-    private final String menuItem;
+    private final String carDiagnosticsMenuItem;
 
-    CarDiagnosticsMenuItems(String menuItem) {
-        this.menuItem = menuItem;
+    CarDiagnosticsMenuItems(String carDiagnosticsMenuItem) {
+        this.carDiagnosticsMenuItem = carDiagnosticsMenuItem;
     }
 
-    public String getMenuItem() {
-        return menuItem;
+    public String getCarDiagnosticsMenuItem() {
+        return carDiagnosticsMenuItem;
     }
 
     @Override
     public String toString() {
-        return menuItem;
+        return carDiagnosticsMenuItem;
     }
 }

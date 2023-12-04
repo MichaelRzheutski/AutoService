@@ -5,18 +5,18 @@ public enum AutoServiceMenuItems {
     AUTOSERVICE_REPAIRMENT_TIME_CALCULATOR("Рассчитать время ремонта автомобиля"),
     AUTOSERVICE_REPAIRMENT_COST_CALCULATOR("Рассчитать стоимость ремонта автомобиля");
 
-    private final String menuItem;
+    private final String autoServiceMenuItem;
 
-    AutoServiceMenuItems(String menuItem) {
-        this.menuItem = menuItem;
+    AutoServiceMenuItems(String autoServiceMenuItem) {
+        this.autoServiceMenuItem = autoServiceMenuItem;
     }
 
-    public String getMenuItem() {
-        return menuItem;
+    public String getAutoServiceMenuItem() {
+        return autoServiceMenuItem;
     }
 
     @Override
     public String toString() {
-        return menuItem;
+        return autoServiceMenuItem;
     }
 }

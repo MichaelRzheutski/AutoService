@@ -7,19 +7,19 @@ public enum AppMainMenuItems {
     AUTOSERVICE_SPARE_PARTS_SHOP("Магазин автозапчастей"),
     AUTOSERVICE_AUTOMECHANICS("Показать список автомехаников");
 
-    private final String menuItem;
+    private final String appMainMenuItem;
 
-    AppMainMenuItems(String menuItem) {
-        this.menuItem = menuItem;
+    AppMainMenuItems(String appMainMenuItem) {
+        this.appMainMenuItem = appMainMenuItem;
     }
 
-    public String getMenuItem() {
-        return menuItem;
+    public String getAppMainMenuItem() {
+        return appMainMenuItem;
     }
 
     @Override
     public String toString() {
-        return menuItem;
+        return appMainMenuItem;
     }
 
 }
