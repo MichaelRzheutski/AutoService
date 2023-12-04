@@ -3,10 +3,9 @@ package com.solvd.autoservice.persons;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Objects;
 import java.util.Set;
 
-import static com.solvd.autoservice.helpers.ConsoleColors.*;
+import static com.solvd.autoservice.enums.ConsoleColors.*;
 
 // Mechanic: Represents a mechanic with his expertise and availability
 public final class Mechanic extends Person {

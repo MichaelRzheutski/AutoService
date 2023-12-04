@@ -1,4 +1,4 @@
-package com.solvd.autoservice.helpers;
+package com.solvd.autoservice.enums;
 
 public enum ConsoleColors {
     ANSI_RESET("\u001B[0m"),

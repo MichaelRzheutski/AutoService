@@ -1,5 +1,7 @@
 package com.solvd.autoservice.menus;
 
+import com.solvd.autoservice.enums.AutoServiceMenuItems;
+import com.solvd.autoservice.enums.GeneralMenuItems;
 import com.solvd.autoservice.exceptions.NegativeValueException;
 import com.solvd.autoservice.exceptions.NotNumberException;
 import com.solvd.autoservice.exceptions.OutOfMenuBoundsException;
@@ -8,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
-import static com.solvd.autoservice.helpers.ConsoleColors.*;
+import static com.solvd.autoservice.enums.ConsoleColors.*;
 import static com.solvd.autoservice.helpers.calcs.RepairmentCostCalc.calcRepairmentCost;
 import static com.solvd.autoservice.helpers.calcs.RepairmentTimeCalc.calcRepairmentTime;
 
@@ -33,11 +35,11 @@ public final class AutoServiceMenu {
                         String.format("%sУслуги доступные у нас в автосервисе:%s",
                                 ANSI_GREEN, ANSI_RESET)
                 );
-                LOGGER.info("[1]. Диагностика автомобиля");
-                LOGGER.info("[2]. Рассчитать время ремонта автомобиля");
-                LOGGER.info("[3]. Рассчитать стоимость ремонта автомобиля");
-                LOGGER.info("[4]. Выйти в предыдущее меню");
-                LOGGER.info("[0]. Выйти из программы");
+                LOGGER.info("[1]. " + AutoServiceMenuItems.AUTOSERVICE_CAR_DIAGNOSTICS);
+                LOGGER.info("[2]. " + AutoServiceMenuItems.AUTOSERVICE_REPAIRMENT_TIME_CALCULATOR);
+                LOGGER.info("[3]. " + AutoServiceMenuItems.AUTOSERVICE_REPAIRMENT_COST_CALCULATOR);
+                LOGGER.info("[4]. " + GeneralMenuItems.AUTOSERVICE_PREVIOUS_MENU);
+                LOGGER.info("[0]. " + GeneralMenuItems.AUTOSERVICE_EXIT);
 
                 if (scanner.hasNextInt()) {
                     option = scanner.nextInt();

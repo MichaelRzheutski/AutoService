@@ -1,6 +1,8 @@
 package com.solvd.autoservice.menus;
 
 import com.solvd.autoservice.car.Car;
+import com.solvd.autoservice.enums.AppMainMenuItems;
+import com.solvd.autoservice.enums.GeneralMenuItems;
 import com.solvd.autoservice.exceptions.NegativeValueException;
 import com.solvd.autoservice.exceptions.NotNumberException;
 import com.solvd.autoservice.exceptions.OutOfMenuBoundsException;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
-import static com.solvd.autoservice.helpers.ConsoleColors.*;
+import static com.solvd.autoservice.enums.ConsoleColors.*;
 import static com.solvd.autoservice.persons.Mechanic.showMechanics;
 
 public final class AppMainMenu {
@@ -51,12 +53,12 @@ public final class AppMainMenu {
                         String.format("%sПожалуйста, выберите одну из предложенных операций: %s",
                                 ANSI_GREEN, ANSI_RESET)
                 );
-                LOGGER.info("[1]. Показать список услуг автосервиса");
-                LOGGER.info("[2]. Показать список клиентов автосервиса");
-                LOGGER.info("[3]. Показать список машин обслуживающихся в автосервисе");
-                LOGGER.info("[4]. Магазин автозапчастей");
-                LOGGER.info("[5]. Показать список автомехаников");
-                LOGGER.info("[0]. Выйти из программы");
+                LOGGER.info("[1]. " + AppMainMenuItems.AUTOSERVICE_SERVICES);
+                LOGGER.info("[2]. " + AppMainMenuItems.AUTOSERVICE_CLIENTS);
+                LOGGER.info("[3]. " + AppMainMenuItems.AUTOSERVICE_CARS);
+                LOGGER.info("[4]. " + AppMainMenuItems.AUTOSERVICE_SPARE_PARTS_SHOP);
+                LOGGER.info("[5]. " + AppMainMenuItems.AUTOSERVICE_AUTOMECHANICS);
+                LOGGER.info("[0]. " + GeneralMenuItems.AUTOSERVICE_EXIT);
 
                 if (SCANNER.hasNextInt()) {
                     option = SCANNER.nextInt();

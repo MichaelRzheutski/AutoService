@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
-import static com.solvd.autoservice.helpers.ConsoleColors.*;
+import static com.solvd.autoservice.enums.ConsoleColors.*;
 
 public final class RepairmentTimeCalc {
     private static final ObjectsCreator OBJECTS_CREATOR = new ObjectsCreator();

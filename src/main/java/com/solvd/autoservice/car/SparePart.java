@@ -4,7 +4,7 @@ import com.solvd.autoservice.helpers.ObjectsCreator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.solvd.autoservice.helpers.ConsoleColors.*;
+import static com.solvd.autoservice.enums.ConsoleColors.*;
 
 // SparePart: Represents type, make, cost, delivery days
 // and availability spares in stock
@@ -91,7 +91,7 @@ public class SparePart extends Car {
                 printSparePartInfo(sparePart, brakesSpareRetailCost);
             }
         }
-        LOGGER.warn("\n");
+        System.out.println();
 
         return car;
     }

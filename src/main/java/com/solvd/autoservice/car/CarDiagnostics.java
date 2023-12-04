@@ -3,7 +3,7 @@ package com.solvd.autoservice.car;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.solvd.autoservice.helpers.ConsoleColors.*;
+import static com.solvd.autoservice.enums.ConsoleColors.*;
 
 public class CarDiagnostics extends Car {
     private Car carForDiagnostics;

@@ -13,7 +13,7 @@ import java.util.Formatter;
 import java.util.Locale;
 import java.util.Set;
 
-import static com.solvd.autoservice.helpers.ConsoleColors.*;
+import static com.solvd.autoservice.enums.ConsoleColors.*;
 
 // Customer: Represents a whole information about customer
 public final class Customer extends Person implements IChildRoom {

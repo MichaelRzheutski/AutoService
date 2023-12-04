@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 import static com.solvd.autoservice.car.SparePart.calculateSparePartsCost;
-import static com.solvd.autoservice.helpers.ConsoleColors.*;
+import static com.solvd.autoservice.enums.ConsoleColors.*;
 
 // Car: Represents make, model, manufacture year, mileage and spare parts
 public class Car implements Washable, Paintable, BodyRepairable,
