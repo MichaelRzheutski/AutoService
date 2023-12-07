@@ -136,18 +136,31 @@ public class Car implements Washable, Paintable, BodyRepairable,
 
     // Method shows full info about car uses lambda invocations
     public final void showFullCarInfo(List<Car> cars) {
-        for (Car car : cars) {
-            showShortCarInfo.accept(car);
-            showCarServices.accept(car);
-        }
+//        List<Car> carList = new ArrayList<>();
+        cars.stream()
+                .forEach(car -> {
+                    showShortCarInfo.accept(car);
+                    showCarServices.accept(car);
+                });
+
+//        for (Car car : cars) {
+//            showShortCarInfo.accept(car);
+//            showCarServices.accept(car);
+//        }
     }
 
     // Method shows spare parts in shop uses lambda invocations
     public final void showSpareParts(List<Car> cars) {
-        for (Car car : cars) {
-            showShortCarInfo.accept(car);
-            calculateSparePartsCost.apply(car);
-        }
+        cars.stream()
+                .forEach(car -> {
+                    showShortCarInfo.accept(car);
+                    calculateSparePartsCost.apply(car);
+                });
+
+//        for (Car car : cars) {
+//            showShortCarInfo.accept(car);
+//            calculateSparePartsCost.apply(car);
+//        }
     }
 
     // Lambda expression shows short info about car
