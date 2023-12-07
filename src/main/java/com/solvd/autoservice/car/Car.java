@@ -142,11 +142,6 @@ public class Car implements Washable, Paintable, BodyRepairable,
                     showShortCarInfo.accept(car);
                     showCarServices.accept(car);
                 });
-
-//        for (Car car : cars) {
-//            showShortCarInfo.accept(car);
-//            showCarServices.accept(car);
-//        }
     }
 
     // Method shows spare parts in shop uses lambda invocations
@@ -156,11 +151,6 @@ public class Car implements Washable, Paintable, BodyRepairable,
                     showShortCarInfo.accept(car);
                     calculateSparePartsCost.apply(car);
                 });
-
-//        for (Car car : cars) {
-//            showShortCarInfo.accept(car);
-//            calculateSparePartsCost.apply(car);
-//        }
     }
 
     // Lambda expression shows short info about car

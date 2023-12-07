@@ -1,6 +1,5 @@
 package com.solvd.autoservice.helpers.calcs;
 
-import com.solvd.autoservice.car.CarDiagnostics;
 import com.solvd.autoservice.enums.CarMenuItems;
 import com.solvd.autoservice.enums.GeneralMenuItems;
 import com.solvd.autoservice.exceptions.NegativeValueException;

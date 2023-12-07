@@ -7,7 +7,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static com.solvd.autoservice.enums.ConsoleColors.*;
+import static com.solvd.autoservice.enums.ConsoleColors.ANSI_GREEN;
+import static com.solvd.autoservice.enums.ConsoleColors.ANSI_RESET;
 
 public class Reflection {
     private final String CLASS_LOCATION = "com.solvd.autoservice.reflection.MyClass";
@@ -41,9 +42,8 @@ public class Reflection {
 
             LOGGER.info(ANSI_GREEN + "Вызов публичного метода toString():" + ANSI_RESET);
             LOGGER.info((toStringMethod.invoke(tenParamsConstructorInstance)));
-        }
-        catch (NoSuchMethodException | InstantiationException
-               | IllegalAccessException | InvocationTargetException e) {
+        } catch (NoSuchMethodException | InstantiationException
+                 | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }

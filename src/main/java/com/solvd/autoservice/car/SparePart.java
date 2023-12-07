@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import static com.solvd.autoservice.enums.ConsoleColors.*;
 
@@ -70,13 +69,13 @@ public class SparePart extends Car {
 
         car.getSpareParts().stream()
                 .filter(sparePart -> car.getCarManufactureYear() <= 2015
-                    && sparePart.getSparePartType().equals("Моторное масло"))
+                        && sparePart.getSparePartType().equals("Моторное масло"))
                 .forEach(sparePart -> SparePart.printSparePartInfo.accept(sparePart, engineOilSpareRetailCost));
 
         // Tire set calculations
         car.getSpareParts().stream()
                 .filter(sparePart -> car.getCarManufactureYear() > 2015
-                    && sparePart.getSparePartType().equals("Комплект шин"))
+                        && sparePart.getSparePartType().equals("Комплект шин"))
                 .forEach(sparePart -> {
                     newValue[0] = tiresSpareRetailCost * 1.5;
                     finalValue[0] = SparePart.calculateCostByDeliveryDays.apply(sparePart, newValue[0]);
@@ -85,7 +84,7 @@ public class SparePart extends Car {
 
         car.getSpareParts().stream()
                 .filter(sparePart -> car.getCarManufactureYear() <= 2015
-                    && sparePart.getSparePartType().equals("Комплект шин"))
+                        && sparePart.getSparePartType().equals("Комплект шин"))
                 .forEach(sparePart -> SparePart.printSparePartInfo.accept(sparePart, tiresSpareRetailCost));
 
         // Brake set calculations
@@ -100,51 +99,11 @@ public class SparePart extends Car {
 
         car.getSpareParts().stream()
                 .filter(sparePart -> car.getCarManufactureYear() <= 2015
-                    && sparePart.getSparePartType().equals("Комплект тормозов"))
+                        && sparePart.getSparePartType().equals("Комплект тормозов"))
                 .forEach(sparePart -> {
                     SparePart.printSparePartInfo.accept(sparePart, brakesSpareRetailCost);
                 });
 
-
-
-//        for (SparePart sparePart : car.getSpareParts()) {
-//
-//            if (car.getCarManufactureYear() > 2015
-//                    && sparePart.getSparePartType().equals("Моторное масло")) {
-//
-//                newValue = engineOilSpareRetailCost * 1.5;
-//                finalValue = SparePart.calculateCostByDeliveryDays.apply(sparePart, newValue);
-//                SparePart.printSparePartInfo.accept(sparePart, finalValue);
-//
-//            } else if (car.getCarManufactureYear() <= 2015
-//                    && sparePart.getSparePartType().equals("Моторное масло")) {
-//                SparePart.printSparePartInfo.accept(sparePart, engineOilSpareRetailCost);
-//            }
-
-//            if (car.getCarManufactureYear() > 2015
-//                    && sparePart.getSparePartType().equals("Комплект шин")) {
-//
-//                newValue = tiresSpareRetailCost * 1.5;
-//                finalValue = SparePart.calculateCostByDeliveryDays.apply(sparePart, newValue);
-//                SparePart.printSparePartInfo.accept(sparePart, finalValue);
-//
-//            } else if (car.getCarManufactureYear() <= 2015
-//                    && sparePart.getSparePartType().equals("Комплект шин")) {
-//                SparePart.printSparePartInfo.accept(sparePart, tiresSpareRetailCost);
-//            }
-
-//            if (car.getCarManufactureYear() > 2015
-//                    && sparePart.getSparePartType().equals("Комплект тормозов")) {
-//
-//                newValue = brakesSpareRetailCost * 1.5;
-//                finalValue = SparePart.calculateCostByDeliveryDays.apply(sparePart, newValue);
-//                SparePart.printSparePartInfo.accept(sparePart, finalValue);
-//
-//            } else if (car.getCarManufactureYear() <= 2015
-//                    && sparePart.getSparePartType().equals("Комплект тормозов")) {
-//                SparePart.printSparePartInfo.accept(sparePart, brakesSpareRetailCost);
-//            }
-//        }
         System.out.println();
 
         return car;
