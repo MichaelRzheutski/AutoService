@@ -2,7 +2,7 @@ package com.solvd.autoservice.helpers.calcs;
 
 import com.solvd.autoservice.car.SparePart;
 import com.solvd.autoservice.customlinkedlist.CustomLinkedList;
-import com.solvd.autoservice.enums.CarDiagnosticsMenuItems;
+import com.solvd.autoservice.enums.CarMenuItems;
 import com.solvd.autoservice.enums.GeneralMenuItems;
 import com.solvd.autoservice.exceptions.NegativeValueException;
 import com.solvd.autoservice.exceptions.NotNumberException;
@@ -39,9 +39,9 @@ public final class RepairmentTimeCalc {
         try {
             while (!isExit) {
                 LOGGER.info(ANSI_GREEN + "Выберите авто для подсчёта времени ремонта:" + ANSI_RESET);
-                LOGGER.info("[1]. " + CarDiagnosticsMenuItems.AUTOSERVICE_BMWX6_DIAGNOSTICS);
-                LOGGER.info("[2]. " + CarDiagnosticsMenuItems.AUTOSERVICE_TOYOTA_LAND_CRUISER_DIAGNOSTICS);
-                LOGGER.info("[3]. " + CarDiagnosticsMenuItems.AUTOSERVICE_MERCEDES_BENZ_DIAGNOSTICS);
+                LOGGER.info("[1]. " + CarMenuItems.AUTOSERVICE_BMWX6);
+                LOGGER.info("[2]. " + CarMenuItems.AUTOSERVICE_TOYOTA_LAND_CRUISER);
+                LOGGER.info("[3]. " + CarMenuItems.AUTOSERVICE_MERCEDES_BENZ);
                 LOGGER.info("[4]. " + GeneralMenuItems.AUTOSERVICE_PREVIOUS_MENU);
                 LOGGER.info("[0]. " + GeneralMenuItems.AUTOSERVICE_EXIT);
 

@@ -54,47 +54,56 @@ public class SparePart extends Car {
         double tiresSpareRetailCost = ObjectsCreator.TIRE_SET_RETAIL_COST;
         double brakesSpareRetailCost = ObjectsCreator.BRAKE_SET_RETAIL_COST;
 
-        double newValue;
-        double finalValue;
+        final double[] newValue = {0};
+        final double[] finalValue = {0};
 
-        for (SparePart sparePart : car.getSpareParts()) {
+        // Engine Oil calculations
+        car.getSpareParts().stream()
+                .filter(sparePart -> car.getCarManufactureYear() > 2015
+                        && sparePart.getSparePartType().equals("Моторное масло"))
+                .forEach(sparePart -> {
+                    newValue[0] = engineOilSpareRetailCost * 1.5;
+                    finalValue[0] = SparePart.calculateCostByDeliveryDays.apply(sparePart, newValue[0]);
+                    SparePart.printSparePartInfo.accept(sparePart, finalValue[0]);
+                });
 
-            if (car.getCarManufactureYear() > 2015
-                    && sparePart.getSparePartType().equals("Моторное масло")) {
+        car.getSpareParts().stream()
+                .filter(sparePart -> car.getCarManufactureYear() <= 2015
+                        && sparePart.getSparePartType().equals("Моторное масло"))
+                .forEach(sparePart -> SparePart.printSparePartInfo.accept(sparePart, engineOilSpareRetailCost));
 
-                newValue = engineOilSpareRetailCost * 1.5;
-                finalValue = SparePart.calculateCostByDeliveryDays.apply(sparePart, newValue);
-                SparePart.printSparePartInfo.accept(sparePart, finalValue);
+        // Tire set calculations
+        car.getSpareParts().stream()
+                .filter(sparePart -> car.getCarManufactureYear() > 2015
+                        && sparePart.getSparePartType().equals("Комплект шин"))
+                .forEach(sparePart -> {
+                    newValue[0] = tiresSpareRetailCost * 1.5;
+                    finalValue[0] = SparePart.calculateCostByDeliveryDays.apply(sparePart, newValue[0]);
+                    SparePart.printSparePartInfo.accept(sparePart, finalValue[0]);
+                });
 
-            } else if (car.getCarManufactureYear() <= 2015
-                    && sparePart.getSparePartType().equals("Моторное масло")) {
-                SparePart.printSparePartInfo.accept(sparePart, engineOilSpareRetailCost);
-            }
+        car.getSpareParts().stream()
+                .filter(sparePart -> car.getCarManufactureYear() <= 2015
+                        && sparePart.getSparePartType().equals("Комплект шин"))
+                .forEach(sparePart -> SparePart.printSparePartInfo.accept(sparePart, tiresSpareRetailCost));
 
-            if (car.getCarManufactureYear() > 2015
-                    && sparePart.getSparePartType().equals("Комплект шин")) {
+        // Brake set calculations
+        car.getSpareParts().stream()
+                .filter(sparePart -> car.getCarManufactureYear() > 2015
+                        && sparePart.getSparePartType().equals("Комплект тормозов"))
+                .forEach(sparePart -> {
+                    newValue[0] = tiresSpareRetailCost * 1.5;
+                    finalValue[0] = SparePart.calculateCostByDeliveryDays.apply(sparePart, newValue[0]);
+                    SparePart.printSparePartInfo.accept(sparePart, finalValue[0]);
+                });
 
-                newValue = tiresSpareRetailCost * 1.5;
-                finalValue = SparePart.calculateCostByDeliveryDays.apply(sparePart, newValue);
-                SparePart.printSparePartInfo.accept(sparePart, finalValue);
+        car.getSpareParts().stream()
+                .filter(sparePart -> car.getCarManufactureYear() <= 2015
+                        && sparePart.getSparePartType().equals("Комплект тормозов"))
+                .forEach(sparePart -> {
+                    SparePart.printSparePartInfo.accept(sparePart, brakesSpareRetailCost);
+                });
 
-            } else if (car.getCarManufactureYear() <= 2015
-                    && sparePart.getSparePartType().equals("Комплект шин")) {
-                SparePart.printSparePartInfo.accept(sparePart, tiresSpareRetailCost);
-            }
-
-            if (car.getCarManufactureYear() > 2015
-                    && sparePart.getSparePartType().equals("Комплект тормозов")) {
-
-                newValue = brakesSpareRetailCost * 1.5;
-                finalValue = SparePart.calculateCostByDeliveryDays.apply(sparePart, newValue);
-                SparePart.printSparePartInfo.accept(sparePart, finalValue);
-
-            } else if (car.getCarManufactureYear() <= 2015
-                    && sparePart.getSparePartType().equals("Комплект тормозов")) {
-                SparePart.printSparePartInfo.accept(sparePart, brakesSpareRetailCost);
-            }
-        }
         System.out.println();
 
         return car;
