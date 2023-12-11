@@ -5,9 +5,6 @@ import com.solvd.autoservice.carservice.Appointment;
 import com.solvd.autoservice.carservice.Invoice;
 import com.solvd.autoservice.carservice.ServiceType;
 import com.solvd.autoservice.interfaces.IChildRoom;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Marker;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -15,6 +12,7 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 import static com.solvd.autoservice.enums.ConsoleColors.*;
+import static com.solvd.autoservice.helpers.MyLogger.MY_LOGGER;
 
 // Customer: Represents a whole information about customer
 public final class Customer extends Person implements IChildRoom {
@@ -26,13 +24,6 @@ public final class Customer extends Person implements IChildRoom {
     private SparePart sparePart;
     private Invoice invoice;
     private String childRoom;
-
-    // Setup Logger log4j2
-    static {
-        System.setProperty("log4j.configurationFile", "src/test/resources/log4j2.xml");
-    }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public Customer() {
         super();
@@ -69,7 +60,7 @@ public final class Customer extends Person implements IChildRoom {
             setChildRoomUsed("Детской комнатой не пользовался");
         }
         result = getChildRoomUsed();
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Услуги детской комнаты: " + ANSI_YELLOW
                         + getChildRoomUsed() + ANSI_RESET
         );
@@ -101,37 +92,37 @@ public final class Customer extends Person implements IChildRoom {
     public void showCustomers(Set<Customer> customers) {
 
         for (Customer customer : customers) {
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Имя и фамилия клиента: " + ANSI_YELLOW
                             + customer.getName() + " " + customer.getSurname() + ANSI_RESET
             );
 
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Роль: " + ANSI_YELLOW
                             + customer.getRole() + ANSI_RESET
             );
 
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Телефон: " + ANSI_YELLOW
                             + customer.getContactInformation() + ANSI_RESET
             );
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Дата поступления авто в обслуживание: " + ANSI_YELLOW
                             + customer.getAppointment().getDate() + ANSI_RESET
             );
 
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Марка авто: " + ANSI_YELLOW
                             + customer.getCarName() + ANSI_RESET
             );
 
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Услуга: " + ANSI_YELLOW
                             + customer.getServiceRecord().getServiceType()
                             + ANSI_RESET
             );
 
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Дата оказания услуги: " + ANSI_YELLOW
                             + customer.getServiceRecord().getServiceDate()
                             + ANSI_RESET
@@ -140,17 +131,17 @@ public final class Customer extends Person implements IChildRoom {
             Formatter serviceCostFormat = new Formatter(Locale.US).format(
                     ANSI_GREEN + "Стоимость услуги: " + ANSI_YELLOW + "%.2f$"
                             + ANSI_RESET, customer.getServiceRecord().getServiceCost());
-            LOGGER.info(String.format(serviceCostFormat.toString()));
+            MY_LOGGER.info(String.format(serviceCostFormat.toString()));
 
             if (customer.getSparePart().isInStock().equals("да")) {
-                LOGGER.info(
+                MY_LOGGER.info(
                         ANSI_GREEN + "Запчасть: " + ANSI_YELLOW
                                 + customer.getSparePart().getSparePartType() + ANSI_GREEN
                                 + " в наличии на складе" + ANSI_RESET
 
                 );
             } else {
-                LOGGER.info(
+                MY_LOGGER.info(
                         ANSI_GREEN + "Запчасть: " + ANSI_YELLOW
                                 + customer.getSparePart().getSparePartType() + ANSI_GREEN
                                 + " отсутствует на складе" + ANSI_RESET
@@ -161,9 +152,9 @@ public final class Customer extends Person implements IChildRoom {
                     ANSI_GREEN + "Счёт на сумму: " + ANSI_YELLOW + "%.2f$" + ANSI_GREEN + " %s",
                     customer.getInvoice().getTotalCost(),
                     customer.getInvoice().getPaymentStatus());
-            LOGGER.info(String.format(invoiceFormat.toString() + ANSI_RESET));
+            MY_LOGGER.info(String.format(invoiceFormat.toString() + ANSI_RESET));
 
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Механик выполнивший работу: " + ANSI_YELLOW
                             + customer.getMechanic().getName() + " "
                             + customer.getMechanic().getSurname() + ANSI_GREEN

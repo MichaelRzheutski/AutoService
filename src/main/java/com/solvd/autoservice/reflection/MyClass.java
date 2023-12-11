@@ -1,9 +1,7 @@
 package com.solvd.autoservice.reflection;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import static com.solvd.autoservice.enums.ConsoleColors.*;
+import static com.solvd.autoservice.helpers.MyLogger.MY_LOGGER;
 
 public class MyClass {
     // Check modifiers
@@ -23,13 +21,6 @@ public class MyClass {
     double doubleType;
     public char charType;
     private boolean booleanType;
-
-    // Setup Logger log4j2
-    static {
-        System.setProperty("log4j.configurationFile", "src/test/resources/log4j2.xml");
-    }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     // Constructors
     private MyClass() {
@@ -175,7 +166,7 @@ public class MyClass {
     }
 
     private void printInfo() {
-        LOGGER.info(ANSI_YELLOW + checkPrivateModifier + ANSI_RESET);
+        MY_LOGGER.info(ANSI_YELLOW + checkPrivateModifier + ANSI_RESET);
         System.out.println();
     }
 

@@ -1,25 +1,17 @@
 package com.solvd.autoservice.reflection;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static com.solvd.autoservice.enums.ConsoleColors.ANSI_GREEN;
 import static com.solvd.autoservice.enums.ConsoleColors.ANSI_RESET;
+import static com.solvd.autoservice.helpers.MyLogger.MY_LOGGER;
 
 public class Reflection {
     private final String CLASS_LOCATION = "com.solvd.autoservice.reflection.MyClass";
 
     private final Class<MyClass> CLASS = (Class<MyClass>) getClass(CLASS_LOCATION);
-
-    static {
-        System.setProperty("log4j.configurationFile", "src/test/resources/log4j2.xml");
-    }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public void runReflection() {
         try {
@@ -36,12 +28,12 @@ public class Reflection {
             Method printInfo = CLASS.getDeclaredMethod("printInfo");
             printInfo.setAccessible(true);
 
-            LOGGER.info(ANSI_GREEN + "Вызов приватного метода printInfo():" + ANSI_RESET);
+            MY_LOGGER.info(ANSI_GREEN + "Вызов приватного метода printInfo():" + ANSI_RESET);
             printInfo.invoke(oneParamConstructorInstance);
             Method toStringMethod = CLASS.getDeclaredMethod("toString");
 
-            LOGGER.info(ANSI_GREEN + "Вызов публичного метода toString():" + ANSI_RESET);
-            LOGGER.info((toStringMethod.invoke(tenParamsConstructorInstance)));
+            MY_LOGGER.info(ANSI_GREEN + "Вызов публичного метода toString():" + ANSI_RESET);
+            MY_LOGGER.info((toStringMethod.invoke(tenParamsConstructorInstance)));
         } catch (NoSuchMethodException | InstantiationException
                  | IllegalAccessException | InvocationTargetException e) {
             throw new RuntimeException(e);

@@ -1,6 +1,7 @@
 package com.solvd.autoservice;
 
 import com.solvd.autoservice.menus.AppMainMenu;
+import com.solvd.autoservice.multithreading.MultiThreading;
 import com.solvd.autoservice.reflection.InfoAboutClass;
 import com.solvd.autoservice.reflection.Reflection;
 
@@ -11,8 +12,11 @@ public class Main {
 //        new AppMainMenu().mainMenu();
 
         // Show info about MyClass
-        new InfoAboutClass().getInfoAboutClass();
+//        new InfoAboutClass().getInfoAboutClass();
         // Use Reflection API
-        new Reflection().runReflection();
+//        new Reflection().runReflection();
+
+        // Multithreading
+        new MultiThreading().runMultiThreading();
     }
 }

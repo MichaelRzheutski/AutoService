@@ -5,24 +5,16 @@ import com.solvd.autoservice.enums.GeneralMenuItems;
 import com.solvd.autoservice.exceptions.NegativeValueException;
 import com.solvd.autoservice.exceptions.NotNumberException;
 import com.solvd.autoservice.exceptions.OutOfMenuBoundsException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
 import static com.solvd.autoservice.enums.ConsoleColors.*;
+import static com.solvd.autoservice.helpers.MyLogger.MY_LOGGER;
 import static com.solvd.autoservice.helpers.calcs.RepairmentCostCalc.calcRepairmentCost;
 import static com.solvd.autoservice.helpers.calcs.RepairmentTimeCalc.calcRepairmentTime;
 
 public final class AutoServiceMenu {
     private static final CarDiagnosticsMenu CAR_DIAGNOSTICS_MENU = new CarDiagnosticsMenu();
-
-    // Setup Logger log4j2
-    static {
-        System.setProperty("log4j.configurationFile", "src/test/resources/log4j2.xml");
-    }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     // AutoService menu
     public void showAutoServiceMenu(Scanner scanner) throws NotNumberException {
@@ -31,15 +23,15 @@ public final class AutoServiceMenu {
 
         try {
             while (!isExit) {
-                LOGGER.info(
+                MY_LOGGER.info(
                         String.format("%sУслуги доступные у нас в автосервисе:%s",
                                 ANSI_GREEN, ANSI_RESET)
                 );
-                LOGGER.info("[1]. " + AutoServiceMenuItems.AUTOSERVICE_CAR_DIAGNOSTICS);
-                LOGGER.info("[2]. " + AutoServiceMenuItems.AUTOSERVICE_REPAIRMENT_TIME_CALCULATOR);
-                LOGGER.info("[3]. " + AutoServiceMenuItems.AUTOSERVICE_REPAIRMENT_COST_CALCULATOR);
-                LOGGER.info("[4]. " + GeneralMenuItems.AUTOSERVICE_PREVIOUS_MENU);
-                LOGGER.info("[0]. " + GeneralMenuItems.AUTOSERVICE_EXIT);
+                MY_LOGGER.info("[1]. " + AutoServiceMenuItems.AUTOSERVICE_CAR_DIAGNOSTICS);
+                MY_LOGGER.info("[2]. " + AutoServiceMenuItems.AUTOSERVICE_REPAIRMENT_TIME_CALCULATOR);
+                MY_LOGGER.info("[3]. " + AutoServiceMenuItems.AUTOSERVICE_REPAIRMENT_COST_CALCULATOR);
+                MY_LOGGER.info("[4]. " + GeneralMenuItems.AUTOSERVICE_PREVIOUS_MENU);
+                MY_LOGGER.info("[0]. " + GeneralMenuItems.AUTOSERVICE_EXIT);
 
                 if (scanner.hasNextInt()) {
                     option = scanner.nextInt();
@@ -53,7 +45,7 @@ public final class AutoServiceMenu {
                         case 5 -> throw new OutOfMenuBoundsException(
                                 "Введён пункт меню " + option + " свыше доступных", option - 1);
                         case -1 -> throw new NegativeValueException("Введено негативное число", option);
-                        default -> LOGGER.info(
+                        default -> MY_LOGGER.info(
                                 String.format("%sНеверная операция, попробуйте ещё раз!%s\n",
                                         ANSI_RED, ANSI_RESET)
                         );
@@ -65,7 +57,7 @@ public final class AutoServiceMenu {
                 }
             }
         } catch (NegativeValueException | OutOfMenuBoundsException e) {
-            LOGGER.debug(ANSI_RED + "Ошибка в классе: " + ANSI_GREEN
+            MY_LOGGER.debug(ANSI_RED + "Ошибка в классе: " + ANSI_GREEN
                     + getClass().getName() + " "
                     + ANSI_RED + e.getMessage() + ANSI_RESET);
         }

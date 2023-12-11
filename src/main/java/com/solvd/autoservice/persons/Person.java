@@ -1,7 +1,5 @@
 package com.solvd.autoservice.persons;
 
-import java.util.Objects;
-
 // Person: Represents an abstract person
 public abstract class Person {
     protected String name;

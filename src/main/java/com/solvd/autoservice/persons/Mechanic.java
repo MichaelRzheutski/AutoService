@@ -1,23 +1,14 @@
 package com.solvd.autoservice.persons;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.Set;
 
 import static com.solvd.autoservice.enums.ConsoleColors.*;
+import static com.solvd.autoservice.helpers.MyLogger.MY_LOGGER;
 
 // Mechanic: Represents a mechanic with his expertise and availability
 public final class Mechanic extends Person {
     private String expertise;
     private String availability;
-
-    // Setup Logger log4j2
-    static {
-        System.setProperty("log4j.configurationFile", "src/test/resources/log4j2.xml");
-    }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public Mechanic(
             String name, String surname,
@@ -33,15 +24,15 @@ public final class Mechanic extends Person {
 
     public static void showMechanics(Set<Mechanic> mechanics) {
         for (Mechanic mechanic : mechanics) {
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Имя и фамилия: " + ANSI_YELLOW
                             + mechanic.getName() + " " + mechanic.getSurname() + ANSI_RESET
             );
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Экспертиза: " + ANSI_YELLOW
                             + mechanic.getExpertise() + ANSI_RESET
             );
-            LOGGER.info(
+            MY_LOGGER.info(
                     ANSI_GREEN + "Доступность: " + ANSI_YELLOW
                             + mechanic.getAvailability() + "\n" + ANSI_RESET
             );
