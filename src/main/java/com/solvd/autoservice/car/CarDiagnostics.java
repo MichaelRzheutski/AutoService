@@ -1,24 +1,15 @@
 package com.solvd.autoservice.car;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.function.Function;
 
 import static com.solvd.autoservice.enums.ConsoleColors.*;
+import static com.solvd.autoservice.helpers.MyLogger.MY_LOGGER;
 
 public class CarDiagnostics extends Car {
     private Car carForDiagnostics;
     private String diagnosticsResult;
     private String damagesSeverity;
     private int diagnosticsTime;
-
-    // Setup Logger log4j2
-    static {
-        System.setProperty("log4j.configurationFile", "src/test/resources/log4j2.xml");
-    }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public CarDiagnostics(
             Car carForDiagnostics, String diagnosticsResult,
@@ -31,27 +22,27 @@ public class CarDiagnostics extends Car {
 
     // Lambda expression which checks car
     public static Function<CarDiagnostics, CarDiagnostics> checkCar = (carDiagnostics) -> {
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Марка авто: " + ANSI_YELLOW +
                         carDiagnostics.getCarForDiagnostics().getCarMake() + ANSI_RESET
         );
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Год выпуска: " + ANSI_YELLOW +
                         carDiagnostics.getCarForDiagnostics().getCarManufactureYear() + ANSI_RESET
         );
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Пробег: " + ANSI_YELLOW +
                         carDiagnostics.getCarForDiagnostics().getMileage() + " км" + ANSI_RESET
         );
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Результат диагностики: " + ANSI_YELLOW +
                         carDiagnostics.getDiagnosticsResult() + ANSI_RESET
         );
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Степень повреждений: " + ANSI_YELLOW +
                         carDiagnostics.getDamagesSeverity() + ANSI_RESET
         );
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Диагностика проводилась дней: " + ANSI_YELLOW +
                         carDiagnostics.getDiagnosticsTime() + "\n" + ANSI_RESET
         );

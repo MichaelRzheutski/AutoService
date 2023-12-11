@@ -1,14 +1,13 @@
 package com.solvd.autoservice.car;
 
 import com.solvd.autoservice.helpers.ObjectsCreator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static com.solvd.autoservice.enums.ConsoleColors.*;
+import static com.solvd.autoservice.helpers.MyLogger.MY_LOGGER;
 
 // SparePart: Represents type, make, cost, delivery days
 // and availability spares in stock
@@ -18,13 +17,6 @@ public class SparePart extends Car {
     private String isInStock;
     private double sparePartCost;
     private int deliveryDays;
-
-    // Setup Logger log4j2
-    static {
-        System.setProperty("log4j.configurationFile", "src/test/resources/log4j2.xml");
-    }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public SparePart() {
     }
@@ -128,7 +120,7 @@ public class SparePart extends Car {
     public static final BiConsumer<SparePart, Double> printSparePartInfo =
             (sparePart, value) -> {
                 if (sparePart.getDeliveryDays() != 0) {
-                    LOGGER.info(
+                    MY_LOGGER.info(
                             ANSI_GREEN + "Информация о запчастях: \nТип запчасти: " + ANSI_YELLOW + sparePart.getSparePartType() + "," + ANSI_RESET +
                                     ANSI_GREEN + " Марка запчасти: " + ANSI_YELLOW + sparePart.getSparePartMake() + "," + ANSI_RESET +
                                     ANSI_GREEN + " Наличие в магазине: " + ANSI_YELLOW + sparePart.isInStock() + ANSI_RESET +
@@ -136,7 +128,7 @@ public class SparePart extends Car {
                                     ANSI_GREEN + " Срок поставки в днях: " + ANSI_YELLOW + sparePart.getDeliveryDays() + ANSI_RESET
                     );
                 } else {
-                    LOGGER.info(
+                    MY_LOGGER.info(
                             ANSI_GREEN + "Информация о запчастях: \nТип запчасти: " + ANSI_YELLOW + sparePart.getSparePartType() + "," + ANSI_RESET +
                                     ANSI_GREEN + " Марка запчасти: " + ANSI_YELLOW + sparePart.getSparePartMake() + "," + ANSI_RESET +
                                     ANSI_GREEN + " Наличие в магазине: " + ANSI_YELLOW + sparePart.isInStock() + ANSI_RESET +

@@ -2,14 +2,13 @@ package com.solvd.autoservice.car;
 
 import com.solvd.autoservice.customlinkedlist.CustomLinkedList;
 import com.solvd.autoservice.interfaces.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 import static com.solvd.autoservice.car.SparePart.calculateSparePartsCost;
 import static com.solvd.autoservice.enums.ConsoleColors.*;
+import static com.solvd.autoservice.helpers.MyLogger.MY_LOGGER;
 
 // Car: Represents make, model, manufacture year, mileage and spare parts
 public class Car implements Washable, Paintable, BodyRepairable,
@@ -23,13 +22,6 @@ public class Car implements Washable, Paintable, BodyRepairable,
     private String electronicsRepairment;
     private String modernization;
     private CustomLinkedList<SparePart> spareParts;
-
-    // Setup Logger log4j2
-    static {
-        System.setProperty("log4j.configurationFile", "src/test/resources/log4j2.xml");
-    }
-
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public Car() {
     }
@@ -54,7 +46,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
             setCarWashed("Машина не помыта");
         }
         result = getCarWashed();
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Внешний вид машины: " + ANSI_YELLOW
                         + getCarWashed() + ANSI_RESET
         );
@@ -72,7 +64,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
             setCarPainted("Машина не перекрашивалась");
         }
         result = getCarPainted();
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Покраска кузова: " + ANSI_YELLOW
                         + getCarPainted() + ANSI_RESET
         );
@@ -90,7 +82,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
             setCarBodyRepaired("Ремонт кузова не проводился");
         }
         result = getCarBodyRepaired();
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Состояние кузова: " + ANSI_YELLOW
                         + getCarBodyRepaired() + ANSI_RESET
         );
@@ -108,7 +100,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
             setCarElectronicsRepaired("Ремонта и замены электроники не проводилось");
         }
         result = getCarElectronicsRepaired();
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Состояние электроники: " + ANSI_YELLOW
                         + getCarElectronicsRepaired() + ANSI_RESET
         );
@@ -126,7 +118,7 @@ public class Car implements Washable, Paintable, BodyRepairable,
             setCarModernized("Модернизация не проводилась");
         }
         result = getCarModernized();
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Модернизация: " + ANSI_YELLOW
                         + getCarModernized() + ANSI_RESET
         );
@@ -155,15 +147,15 @@ public class Car implements Washable, Paintable, BodyRepairable,
 
     // Lambda expression shows short info about car
     Consumer<Car> showShortCarInfo = (car) -> {
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Марка автомобиля: " + ANSI_YELLOW
                         + car.getCarMake() + ANSI_RESET
         );
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Год выпуска: " + ANSI_YELLOW
                         + car.getCarManufactureYear() + ANSI_RESET
         );
-        LOGGER.info(
+        MY_LOGGER.info(
                 ANSI_GREEN + "Пробег км: " + ANSI_YELLOW
                         + car.getMileage() + ANSI_RESET
         );
